@@ -2,9 +2,7 @@
  * Widget Directive
  */
 
-angular
-    .module('RDash')
-    .directive('rdWidget', rdWidget);
+angular.module('bikeApp').directive('rdWidget', rdWidget);
 
 function rdWidget() {
     var directive = {

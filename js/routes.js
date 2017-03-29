@@ -3,7 +3,7 @@
 /**
  * Route configuration for the RDash module.
  */
-angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
+angular.module('bikeApp').config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
 
         // For unmatched routes
@@ -13,11 +13,15 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'templates/dashboard.html'
+                templateUrl: 'views/overview.html'
+            })
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: 'views/dashboard.html'
             })
             .state('tables', {
                 url: '/tables',
-                templateUrl: 'templates/tables.html'
+                templateUrl: 'views/tables.html'
             });
     }
 ]);
