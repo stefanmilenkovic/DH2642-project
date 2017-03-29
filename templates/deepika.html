@@ -1,0 +1,75 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+
+
+</head>
+<body>
+<p>Hello world! This is HTML5 Boilerplate.</p>
+<div id="mapid" style="height:600px"></div>
+
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+    var mymap = L.map('mapid').setView([47.60, -122.33], 13);
+
+    var southWest = L.latLng(45.60, -118.33),
+        northEast = L.latLng(49.60, -126.83),
+        bounds = L.latLngBounds(southWest, northEast);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        minZoom: 5,
+        maxBounds: bounds
+    }).addTo(mymap);
+
+    var marker = L.marker();
+    var popupContent = '<form id="report-form" class ="form-horizontal">'+
+        '<div class="form-group">'+
+        '<label class="control-label col-md-5"><strong>Report Here</strong></label>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<textarea rows="3" cols="30" placeholder="Required" id="report" name="report" class="form-control col-md-10"></textarea>'+
+        '</div>'+
+        '<div class="form-group">'+
+        '<div style="text-align:center;" class="col-md-4"><button type="button" class="btn">Cancel</button></div>'+
+        '<div style="text-align:center;" class="col-md-4"><button type="submit" value="submit" class="btn btn-primary trigger-submit">Submit</button></div>'+
+        '</div>'+
+        '</form>';
+
+    function onMapClick(e) {
+        marker.setLatLng(e.latlng).addTo(mymap);
+        marker.bindPopup(popupContent,{
+            keepInView: true,
+            closeButton: false,
+            maxWidth: 500
+        }).openPopup();
+    }
+
+    mymap.on('click', onMapClick);
+
+    /* var popup = L.popup();
+
+     function onMapClick(e) {
+     popup
+     .setLatLng(e.latlng)
+     .setContent("You clicked the map at " + e.latlng.toString())
+     .openOn(mymap);
+     }*/
+
+</script>
+</body>
+</html>
