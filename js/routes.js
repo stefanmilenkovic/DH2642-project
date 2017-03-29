@@ -13,7 +13,8 @@ angular.module('bikeApp').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('index', {
                 url: '/',
-                templateUrl: 'views/overview.html'
+                templateUrl: 'views/overview.html',
+                controller: OverviewCtrl
             })
             .state('dashboard', {
                 url: '/dashboard',

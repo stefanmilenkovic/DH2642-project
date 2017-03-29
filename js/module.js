@@ -1,1 +1,1 @@
-angular.module('bikeApp', ['ui.bootstrap', 'ui.router', 'ngCookies']);
+angular.module('bikeApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'leaflet-directive']);

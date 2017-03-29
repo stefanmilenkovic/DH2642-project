@@ -2,14 +2,15 @@
  * Master Controller
  */
 
-angular.module('bikeApp')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
+angular.module('bikeApp').controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
 
 function MasterCtrl($scope, $cookieStore) {
 
     $scope.issueFilter = {
         queryText: undefined
     };
+
+
 
     /**
      * Sidebar Toggle & Cookie Control
