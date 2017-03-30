@@ -9,6 +9,10 @@
     margin:0px !important;
 }
 
+.leaflet-top, .leaflet-bottom{
+    z-index: 1 !important;
+}
+
 
 #content-wrapper.right-bar-enabled .right-bar {
     right: 0;

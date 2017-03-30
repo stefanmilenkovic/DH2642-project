@@ -1,7 +1,8 @@
-angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', OverviewCtrl]);
+angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', 'BikeIssueService', OverviewCtrl]);
 
-function OverviewCtrl($scope, $cookieStore, leafletBoundsHelpers) {
+function OverviewCtrl($scope, $cookieStore, BikeIssueService, leafletBoundsHelpers) {
 
+    $scope.bikeIssueService = BikeIssueService;
 
     $scope.seattle = {
         lat: 47.60,
@@ -19,11 +20,7 @@ function OverviewCtrl($scope, $cookieStore, leafletBoundsHelpers) {
         scrollWheelZoom: false
     };
 
-    angular.extend($scope, {
-        events: {}
-    });
-
-
+    $scope.events = {};
     $scope.markers = new Array();
 
     $scope.$on("leafletDirectiveMap.click", function(event, args){
@@ -34,9 +31,34 @@ function OverviewCtrl($scope, $cookieStore, leafletBoundsHelpers) {
             message: "My Added Marker",
             draggable:true
         });
-        window.location = "#/right-sidebar.html";
+        $scope.showRightBar();
     });
 
+    $scope.retrieveIssues = function () {
+        var promiseIssueData = $scope.bikeIssueService.listIssuesByType(undefined);
+        promiseIssueData.then(
+            function (response) {
+                if(angular.isDefined(response.data)){
+                    angular.forEach(response.data, function(issue, issueKey) {
+                        console.log(JSON.stringify(issue));
+                        var issueObject = {
+                            lat: issue.latitude,
+                            lng: issue.longitude,
+                            message: issue.message,
+                            draggable:false
+                        };
+                        $scope.markers.push(issueObject);
+                    });
+                }
+            },
+            function (response) {
+                $scope.apiCallStatus = "Error :(";
+                alert("Error: " + JSON.stringify(response));
+            }
+        );
+    };
+
+    $scope.retrieveIssues();
 };
     /*
 
