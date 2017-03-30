@@ -8,16 +8,20 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http, $cookieSt
         "Content-Type": "application/json;charset=utf-8"
     };
 
-    this.listIssuesByType = function(issueType){
+    this.listIssues = function(query, issueType){
 
         var searchParams = {
             max: 1000,
             q: {},
             skip: 0
         };
-        if(angular.isDefined(issueType)){
+        if(angular.isDefined(issueType) && issueType != "all"){
             searchParams.q["issue_type"] = issueType;
         }
+        if(angular.isDefined(query)){
+            searchParams.q["message"] = query;
+        }
+        console.log("Search params: "+JSON.stringify(searchParams));
 
         var url = 'https://bikereport-b1e1.restdb.io/rest/issues';
         console.log("URL: "+url);

@@ -6,9 +6,6 @@ angular.module('bikeApp').controller('MasterCtrl', ['$scope', '$cookieStore', Ma
 
 function MasterCtrl($scope, $cookieStore) {
 
-    $scope.issueFilter = {
-        queryText: undefined
-    };
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -39,6 +36,8 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() {
         $scope.$apply();
     };
+
+
 
 
     $scope.rightBarSelected = "activity";

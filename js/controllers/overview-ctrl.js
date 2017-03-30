@@ -1,13 +1,26 @@
-angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', 'BikeIssueService', OverviewCtrl]);
+angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', '$timeout', 'BikeIssueService', OverviewCtrl]);
 
-function OverviewCtrl($scope, $cookieStore, BikeIssueService, leafletBoundsHelpers) {
+function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService, leafletBoundsHelpers) {
 
     $scope.bikeIssueService = BikeIssueService;
+
+    $scope.issueTypes = [
+        {id: 'all', name: 'All types'},
+        {id: 'hazard', name: 'Hazard'},
+        {id: 'pothole', name: 'Pothole'},
+        {id: 'damage', name: 'Damage'},
+        {id: 'theft', name: 'Theft'}
+    ];
+
+    $scope.issueFilter = {
+        queryText: undefined,
+        selectedType: $scope.issueTypes[0]
+    };
 
     $scope.seattle = {
         lat: 47.60,
         lng: -122.33,
-        zoom: 13
+        zoom: 11
     };
     $scope.tiles = {
         url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -34,11 +47,24 @@ function OverviewCtrl($scope, $cookieStore, BikeIssueService, leafletBoundsHelpe
         $scope.showRightBar();
     });
 
+    $scope.filterIssuesFromInput = function(){
+        if ($scope.organisationsFilterTimeout){
+            $timeout.cancel($scope.organisationsFilterTimeout);
+        }
+
+        $scope.organisationsFilterTimeout = $timeout(function() {
+            console.log("Should filter from: "+JSON.stringify($scope.issueFilter));
+            $scope.retrieveIssues();
+        }, 250);
+    };
+
     $scope.retrieveIssues = function () {
-        var promiseIssueData = $scope.bikeIssueService.listIssuesByType(undefined);
+        var promiseIssueData = $scope.bikeIssueService.listIssues($scope.issueFilter.queryText, $scope.issueFilter.selectedType.id);
         promiseIssueData.then(
             function (response) {
                 if(angular.isDefined(response.data)){
+                    $scope.markers = new Array();
+
                     angular.forEach(response.data, function(issue, issueKey) {
                         console.log(JSON.stringify(issue));
                         var issueObject = {

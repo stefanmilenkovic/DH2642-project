@@ -1,5 +1,11 @@
 <div class="col-md-12 p-0" ng-transclude>
     <div class="col-md-3">
-        <input ng-model="issueFilter.queryText" type="text" class="form-control" name="issue-query" placeholder="Query...">
+        <input ng-model="issueFilter.queryText" ng-change="filterIssuesFromInput()" type="text" class="form-control" name="issue-query" placeholder="Query...">
+    </div>
+    <div class="col-md-3">
+        <select name="issueFilterType" id="issueFilterType" class="form-control"
+                ng-change="filterIssuesFromInput()"
+                ng-options="option.name for option in issueTypes track by option.id"
+                ng-model="issueFilter.selectedType"></select>
     </div>
 </div>
