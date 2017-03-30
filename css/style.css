@@ -5,3 +5,54 @@
 .p-10{
     padding:10px !important;
 }
+.m-0{
+    margin:0px !important;
+}
+
+
+#content-wrapper.right-bar-enabled .right-bar {
+    right: 0;
+}
+#content-wrapper.right-bar-enabled .left-layout {
+    left: 0;
+}
+.right-bar-toggle:focus {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+}
+.side-bar.right-bar {
+    float: right !important;
+    right: -350px;
+    bottom: 0px;
+    top: 70px;
+}
+.side-bar {
+    -moz-transition: all 200ms ease-out;
+    -webkit-transition: all 200ms ease-out;
+    box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+    display: block;
+    overflow-y: auto;
+    position: fixed;
+    transition: all 200ms ease-out;
+    width: 350px;
+}
+.side-bar .nav.nav-tabs + .tab-content {
+    margin-bottom: 0px;
+    padding: 20px;
+}
+.side-bar .tabs li.tab a {
+    font-weight: 600;
+}
+.right-bar {
+    border-left: solid 2px rgb(245, 145, 0);
+    border-top: solid 2px rgb(245, 145, 0);
+    background: white !important;
+    position: fixed !important;
+    z-index: 99 !important;
+}
+.right-bar h4 {
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 10px;
+}
+.right-bar .nicescroll {
+    height: 100%;
+}

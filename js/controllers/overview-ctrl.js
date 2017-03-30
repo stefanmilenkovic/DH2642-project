@@ -5,8 +5,8 @@ function OverviewCtrl($scope, $cookieStore) {
     // http://tombatossals.github.io/angular-leaflet-directive/#!/examples/tiles
     $scope.seattle = {
         lat: 47.60,
-            lng: -122.33,
-            zoom: 13
+        lng: -122.33,
+        zoom: 13
     };
     $scope.tiles = {
         url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -20,9 +20,7 @@ function OverviewCtrl($scope, $cookieStore) {
         scrollWheelZoom: false
     };
 
-
-
-    $scope.createMap = function () {
+    $scope.plotMap = function () {
 
         var mymap = L.map('mapid').setView([47.60, -122.33], 13);
 

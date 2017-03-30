@@ -4,15 +4,16 @@
   </div>
 </div>
 
-<div class="row">
-  filter: {{issueFilter}}
-</div>
-
 <div class="col-md-12 p-0" style="min-height:480px;">
 
   <leaflet width="100%" height="480px" center="seattle" tiles="tiles" defaults="defaults"></leaflet>
   <p>Current TileLayer Url: {{ tiles.url }}</p>
   <p>Current Zoom Level: {{ cairo.zoom }}</p>
+
+</div>
+
+<div class="row">
+  filter: {{issueFilter}}
 </div>
 
 <script type="text/javascript">
