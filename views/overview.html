@@ -4,12 +4,10 @@
   </div>
 </div>
 
+
 <div class="col-md-12 p-0" style="min-height:480px;">
 
-  <leaflet width="100%" height="480px" center="seattle" tiles="tiles" defaults="defaults"></leaflet>
-  <p>Current TileLayer Url: {{ tiles.url }}</p>
-  <p>Current Zoom Level: {{ cairo.zoom }}</p>
-
+  <leaflet width="100%" height="775px" center="seattle" tiles="tiles" defaults="defaults" markers="markers" event-broadcast="events"></leaflet>
 </div>
 
 <div class="row">
@@ -17,17 +15,6 @@
 </div>
 
 <script type="text/javascript">
-
-
-
-    /* var popup = L.popup();
-
-     function onMapClick(e) {
-     popup
-     .setLatLng(e.latlng)
-     .setContent("You clicked the map at " + e.latlng.toString())
-     .openOn(mymap);
-     }*/
 
 </script>
 

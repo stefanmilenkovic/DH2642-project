@@ -1,8 +1,8 @@
 angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', OverviewCtrl]);
 
-function OverviewCtrl($scope, $cookieStore) {
+function OverviewCtrl($scope, $cookieStore, leafletBoundsHelpers) {
 
-    // http://tombatossals.github.io/angular-leaflet-directive/#!/examples/tiles
+
     $scope.seattle = {
         lat: 47.60,
         lng: -122.33,
@@ -10,32 +10,46 @@ function OverviewCtrl($scope, $cookieStore) {
     };
     $scope.tiles = {
         url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        options:{
+        options: {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            minZoom: 5
+            maxZoom: 18
         }
     };
     $scope.defaults = {
         scrollWheelZoom: false
     };
 
-    $scope.plotMap = function () {
+    angular.extend($scope, {
+        events: {}
+    });
+
+
+    $scope.markers = new Array();
+
+    $scope.$on("leafletDirectiveMap.click", function(event, args){
+        var leafEvent = args.leafletEvent;
+        $scope.markers.push({
+            lat: leafEvent.latlng.lat,
+            lng: leafEvent.latlng.lng,
+            message: "My Added Marker",
+            draggable:true
+        });
+        window.location = "#/right-sidebar.html";
+    });
+
+};
+    /*
+
+    var southWest = L.latLng(45.60,-118.33),
+        northEast = L.latLng(49.60,-126.83),
+        bounds = L.latLngBounds(southWest, northEast);
+
+    $scope.createMap = function () {
 
         var mymap = L.map('mapid').setView([47.60, -122.33], 13);
 
-        var southWest = L.latLng(45.60, -118.33),
-            northEast = L.latLng(49.60, -126.83),
-            bounds = L.latLngBounds(southWest, northEast);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18,
-            minZoom: 5,
-            maxBounds: bounds
-        }).addTo(mymap);
 
-        var marker = L.marker();
         var popupContent = '<form id="report-form" class ="form-horizontal">' +
             '<div class="form-group">' +
             '<label class="control-label col-md-5"><strong>Report Here</strong></label>' +
@@ -49,18 +63,55 @@ function OverviewCtrl($scope, $cookieStore) {
             '</div>' +
             '</form>';
 
-        function onMapClick(e) {
-            marker.setLatLng(e.latlng).addTo(mymap);
-            marker.bindPopup(popupContent, {
-                keepInView: true,
-                closeButton: false,
-                maxWidth: 500
-            }).openPopup();
-        }
+        $scope.markers.push({
+            lat: leafEvent.latlng.lat,
+            lng: leafEvent.latlng.lng,
+            message: popupContent,
+            draggable: true
+        });
+    };*/
 
-        mymap.on('click', onMapClick);
-    };
+
+/*  $scope.createMap = function () {
+
+          var mymap = L.map('mapid').setView([47.60, -122.33], 13);
+
+          var southWest = L.latLng(45.60, -118.33),
+              northEast = L.latLng(49.60, -126.83),
+              bounds = L.latLngBounds(southWest, northEast);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+              maxZoom: 18,
+              minZoom: 5,
+              maxBounds: bounds
+          }).addTo(mymap);
+
+          var marker = L.marker();
+          var popupContent = '<form id="report-form" class ="form-horizontal">' +
+              '<div class="form-group">' +
+              '<label class="control-label col-md-5"><strong>Report Here</strong></label>' +
+              '</div>' +
+              '<div class="form-group">' +
+              '<textarea rows="3" cols="30" placeholder="Required" id="report" name="report" class="form-control col-md-10"></textarea>' +
+              '</div>' +
+              '<div class="form-group">' +
+              '<div style="text-align:center;" class="col-md-4"><button type="button" class="btn">Cancel</button></div>' +
+              '<div style="text-align:center;" class="col-md-4"><button type="submit" value="submit" class="btn btn-primary trigger-submit">Submit</button></div>' +
+              '</div>' +
+              '</form>';
+
+          function onMapClick(e) {
+              marker.setLatLng(e.latlng).addTo(mymap);
+              marker.bindPopup(popupContent, {
+                  keepInView: true,
+                  closeButton: false,
+                  maxWidth: 500
+              }).openPopup();
+          }
+
+          mymap.on('click', onMapClick);
+      };*/
 
     //$scope.createMap();
 
-};
