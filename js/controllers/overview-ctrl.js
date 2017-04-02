@@ -159,6 +159,15 @@ function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService, leafletB
           }
 
           mymap.on('click', onMapClick);
+
+
+ [-122.338,47.6081]
+ [-122.3345,47.6126]
+ [-122.3386,47.621]
+ [-122.3331,47.6103]
+ [-122.3343,47.6003]
+ [-122.3007,47.6676]
+ [-122.3007,47.6674]
       };*/
 
     //$scope.createMap();
