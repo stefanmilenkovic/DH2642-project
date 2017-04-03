@@ -6,11 +6,6 @@ angular.module('bikeApp').controller('MasterCtrl', ['$scope', '$cookieStore', Ma
 
 function MasterCtrl($scope, $cookieStore) {
 
-    $scope.issueFilter = {
-        queryText: undefined
-    };
-
-
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -41,4 +36,56 @@ function MasterCtrl($scope, $cookieStore) {
     window.onresize = function() {
         $scope.$apply();
     };
+
+
+
+
+    $scope.rightBarSelected = "activity";
+    $scope.rightBarTabsDefault = [$scope.rightBarSelected];
+
+    $scope.rightBarReset = function(skipSettingDefaultTag){
+        $scope.rightBarTabs = new Array();
+        Array.prototype.push.apply($scope.rightBarTabs, $scope.rightBarTabsDefault);
+        if(skipSettingDefaultTag === true)
+            return;
+        $scope.setSelectedRightBarTab("activity");
+    };
+    $scope.rightBarTabVisible = function(tabKey){
+        if(angular.isDefined(tabKey) && $scope.rightBarTabs.indexOf(tabKey.toLowerCase()) != -1)
+            return true;
+        return false;
+    };
+
+    $scope.isRightBarVisible = false;
+
+    $scope.resetAndToggleRightBar = function(newState){
+        $scope.rightBarReset();
+        $scope.toggleRightBar(newState);
+    };
+
+    $scope.toggleRightBar = function(newState){
+        if(angular.isDefined(newState)){
+            $scope.isRightBarVisible = newState;
+            $('#content-wrapper').toggleClass('right-bar-enabled', newState);
+        }
+        else{
+            $scope.isRightBarVisible = !$scope.isRightBarVisible;
+            $('#content-wrapper').toggleClass('right-bar-enabled');
+        }
+    };
+
+    $scope.showRightBar = function () {
+        $scope.isRightBarVisible = true;
+        $('#content-wrapper').toggleClass('right-bar-enabled', true);
+    };
+
+    $scope.hideRightBar = function () {
+        $scope.isRightBarVisible = false;
+        $('#content-wrapper').toggleClass('right-bar-enabled', false);
+    };
+
+    $('.right-bar-toggle').on('click', function(e) {
+        e.preventDefault();
+        $('#wrapper').toggleClass('right-bar-enabled');
+    });
 }

@@ -1,0 +1,38 @@
+<div class="side-bar right-bar">
+    <div class="nicescroll">
+        <ul class="nav">
+            <li class="tab">
+                <a href="#" aria-expanded="false">
+                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                    <span class="hidden-xs">Create new issue</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="container">
+            <form>
+                <label>Select the type of issues</label>
+                <div class="radio">
+                    <label><input type="radio" name="hazard">Hazard</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="pothole">Pothole</label>
+                </div>
+                <div class="radio disabled">
+                    <label><input type="radio" name="damage" disabled>Damage</label>
+                </div>
+                <div class="radio disabled">
+                    <label><input type="radio" name="theft" disabled>Theft</label>
+                </div>
+            </form>
+            <form>
+                <div class="form-group">
+                    <label>Comments:</label>
+                    <input type="text" class="form-control" id="issue_comment">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
