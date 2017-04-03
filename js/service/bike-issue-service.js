@@ -1,6 +1,6 @@
 
 
-angular.module('bikeApp').factory('Dinner', function ($http, $cookieStore) {
+angular.module('bikeApp').factory('BikeIssueService', function ($http, $cookieStore) {
 
     var requestHeaders = {
         'x-apikey': '58dcea65f1d5e67930abe587',
@@ -8,19 +8,27 @@ angular.module('bikeApp').factory('Dinner', function ($http, $cookieStore) {
         "Content-Type": "application/json;charset=utf-8"
     };
 
-    this.listIssues = function(issueType){
-        var url = 'https://windpowerdata-8069.restdb.io/rest/benchmark';
+    this.listIssues = function(query, issueType){
+
+        var searchParams = {
+            max: 1000,
+            q: {},
+            skip: 0
+        };
+        if(angular.isDefined(issueType) && issueType != "all"){
+            searchParams.q["issue_type"] = issueType;
+        }
+        if(angular.isDefined(query)){
+            searchParams.q["message"] = query;
+        }
+        console.log("Search params: "+JSON.stringify(searchParams));
+
+        var url = 'https://bikereport-b1e1.restdb.io/rest/issues';
         console.log("URL: "+url);
         var promise = $http({
             method: 'GET',
             url: url,
-            params: {
-                max: 1000,
-                q: {},
-                skip: 0,
-                groupby: ["year", "month"],
-                aggregate: ["SUM:wp1", "SUM:wp2", "SUM:wp3"]
-            },
+            params: searchParams,
             headers: requestHeaders
         });
 

@@ -6,9 +6,6 @@ angular.module('bikeApp').controller('MasterCtrl', ['$scope', '$cookieStore', Ma
 
 function MasterCtrl($scope, $cookieStore) {
 
-    $scope.issueFilter = {
-        queryText: undefined
-    };
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -41,6 +38,8 @@ function MasterCtrl($scope, $cookieStore) {
     };
 
 
+
+
     $scope.rightBarSelected = "activity";
     $scope.rightBarTabsDefault = [$scope.rightBarSelected];
 
@@ -63,6 +62,7 @@ function MasterCtrl($scope, $cookieStore) {
         $scope.rightBarReset();
         $scope.toggleRightBar(newState);
     };
+
     $scope.toggleRightBar = function(newState){
         if(angular.isDefined(newState)){
             $scope.isRightBarVisible = newState;
@@ -74,11 +74,16 @@ function MasterCtrl($scope, $cookieStore) {
         }
     };
 
-
-    $scope.setSelectedRightBarTab = function(rightBarTabKey){
-        if(angular.isUndefined(rightBarTabKey)) return;
-        $scope.rightBarSelected = rightBarTabKey;
+    $scope.showRightBar = function () {
+        $scope.isRightBarVisible = true;
+        $('#content-wrapper').toggleClass('right-bar-enabled', true);
     };
+
+    $scope.hideRightBar = function () {
+        $scope.isRightBarVisible = false;
+        $('#content-wrapper').toggleClass('right-bar-enabled', false);
+    };
+
     $('.right-bar-toggle').on('click', function(e) {
         e.preventDefault();
         $('#wrapper').toggleClass('right-bar-enabled');

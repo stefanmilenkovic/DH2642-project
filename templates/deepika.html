@@ -18,14 +18,13 @@
 <script>
     var mymap = L.map('mapid').setView([47.60, -122.33], 13);
 
-    var southWest = L.latLng(45.60, -118.33),
-        northEast = L.latLng(49.60, -126.83),
+    var southWest = L.latLng(35.60, -130.33),
+        northEast = L.latLng(59.60, -136.83),
         bounds = L.latLngBounds(southWest, northEast);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
         maxZoom: 18,
-        minZoom: 5,
         maxBounds: bounds
     }).addTo(mymap);
 

@@ -20,9 +20,9 @@
   <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="http://tombatossals.github.io/angular-leaflet-directive/bower_components/leaflet/dist/leaflet.js"></script>
+  <script src="https://tombatossals.github.io/angular-leaflet-directive/bower_components/leaflet/dist/leaflet.js"></script>
   <link rel="stylesheet" href="http://tombatossals.github.io/angular-leaflet-directive/bower_components/leaflet/dist/leaflet.css" />
-  <script src="/components/angular-leaflet-directive/angular-leaflet-directive.js"></script>
+  <script src="components/angular-leaflet-directive/angular-leaflet-directive.js"></script>
   <!-- endbuild -->
 
   <!-- Custom Scripts -->
@@ -40,6 +40,9 @@
   <script type="text/javascript" src="js/controllers/master-ctrl.js"></script>
   <script type="text/javascript" src="js/controllers/overview-ctrl.js"></script>
 
+  <!-- Service -->
+  <script type="text/javascript" src="js/service/bike-issue-service.js"></script>
+
 
 </head>
 <body ng-controller="MasterCtrl">
@@ -53,15 +56,6 @@
 
     <div id="content-wrapper">
       <div class="page-content">
-
-        <!-- Header Bar -->
-        <div class="row header p-10 m-0">
-          <issue-search-input></issue-search-input>
-          <a href="#" ng-click="resetAndToggleRightBar()" class="right-bar-toggle waves-effect waves-light w-m-50 text-center">
-            <i ng-class="isRightBarVisible === true ? 'fa-caret-right' : 'fa-caret-left'" class="fa fa-lg font-1c3" aria-hidden="true"></i>
-          </a>
-        </div>
-        <!-- End Header Bar -->
 
         <!-- Main Content -->
         <div ui-view></div>
