@@ -1,14 +1,20 @@
 
 
-angular.module('bikeApp').factory('BikeIssueService', function ($http, $cookieStore) {
+angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
 
     var requestHeaders = {
         'x-apikey': '58dcea65f1d5e67930abe587',
-        "Accept": "application/json; charset=utf-8",
-        "Content-Type": "application/json;charset=utf-8"
+        'accept': 'application/json; charset=utf-8',
+        'content-type': 'application/json; charset=utf-8'
     };
 
-    this.listIssues = function(query, issueType){
+    var postHeaders = {
+        'cache-control': 'no-cache',
+        'x-apikey': '58dcea65f1d5e67930abe587',
+        'content-type': 'application/json'
+    }
+    var BikeIssueService ={};
+    BikeIssueService.listIssues = function(query, issueType){
 
         var searchParams = {
             max: 1000,
@@ -35,6 +41,36 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http, $cookieSt
         return promise;
     };
 
-    return this;
+  /*  BikeIssueService.addNewIssue = function(issue){
+        $http.post('https://bikereport-b1e1.restdb.io/rest/issues', issue, requestHeaders).then(
+            function (response) {
+                if (response.data)
+                     $log.info("Post Data Submitted Successfully!");
+             },
+            function (response) {
+                $log.info(response.statusText);
+        }
+        )};*/
+
+    BikeIssueService.addNewIssue = function(issue) {
+      var req = {
+          method: 'POST',
+          url: 'https://bikereport-b1e1.restdb.io/rest/issues',
+          headers: requestHeaders,
+          data : issue
+      };
+
+      $http(req).then(function (response) {
+          $log.info("Post Data Submitted Successfully!");
+      },
+          function (response) {
+              $log.info(response.statusText);
+      });
+  };
+
+    return BikeIssueService;
 
 });
+
+
+////Exampel

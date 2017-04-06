@@ -2,15 +2,13 @@
  * Master Controller
  */
 
-angular.module('bikeApp').controller('MasterCtrl', ['$scope', '$cookieStore', MasterCtrl]);
-
-function MasterCtrl($scope, $cookieStore) {
-
+angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', function ($scope, BikeIssueService) {
 
     /**
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
+    var issue = {};
 
     $scope.getWidth = function() {
         return window.innerWidth;
@@ -74,9 +72,11 @@ function MasterCtrl($scope, $cookieStore) {
         }
     };
 
-    $scope.showRightBar = function () {
+    $scope.showRightBar = function (lat, lng) {
         $scope.isRightBarVisible = true;
         $('#content-wrapper').toggleClass('right-bar-enabled', true);
+        $scope.lat = lat;
+        $scope.lng = lng;
     };
 
     $scope.hideRightBar = function () {
@@ -88,4 +88,17 @@ function MasterCtrl($scope, $cookieStore) {
         e.preventDefault();
         $('#wrapper').toggleClass('right-bar-enabled');
     });
-}
+
+    $scope.createIssue = function(lng,lat,typeOfIssue,comments){
+        var d = new Date();
+        var n = d.getTime();
+        var issue = {
+            issue_type: typeOfIssue,
+            longitude: lng,
+            latitude: lat,
+            message: comments,
+            timestamp: n
+        };
+        BikeIssueService.addNewIssue(issue);
+    };
+}]);

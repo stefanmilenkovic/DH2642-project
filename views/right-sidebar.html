@@ -3,41 +3,39 @@
         <h4>Create a new Issues</h4>
        <form style="margin: 5px;">
 
-           <form class="form-inline">
            <div class="form-group">
                <label for="longitude">Longitude</label>
-               <input type="number" class="form-control" id="longitude">
+               <input type="number" class="form-control" id="longitude" step="any" ng-model="lng">
+           </div>
+           <div class="form-group">
+               <label for="latitude">Latitude</label>
+               <input type="number" class="form-control" id="latitude" step="any" ng-model="lat">
            </div>
 
-           <div class="form-group">
-               <label for="latitude">Longitude</label>
-               <input type="number" class="form-control" id="latitude">
-           </div>
-           </form>
 
            <fieldset class="form-group">
-               <legend>Types of Issues</legend>
+               <legend>Select the type of Issues</legend>
                <div class="form-check">
                    <label class="form-check-label">
-                       <input type="radio" class="form-check-input" name="optionsRadios" id="hazard" value="hazard">
+                       <input type="radio" ng-model="typeOfIssue" value="hazard" >
                         Hazard
                    </label>
                </div>
                <div class="form-check">
                    <label class="form-check-label">
-                       <input type="radio" class="form-check-input" name="optionsRadios" id="pothole" value="pothole">
+                       <input type="radio" ng-model="typeOfIssue" value="pothole">
                        Pothole
                    </label>
                </div>
                <div class="form-check">
                    <label class="form-check-label">
-                       <input type="radio" class="form-check-input" name="optionsRadios" id="damage" value="damage">
+                       <input type="radio" ng-model="typeOfIssue" value="damage">
                        Damage
                    </label>
                </div>
                <div class="form-check">
                    <label class="form-check-label">
-                       <input type="radio" class="form-check-input" name="optionsRadios" id="theft" value="theft">
+                       <input type="radio" ng-model="typeOfIssue" value="theft">
                        Theft
                    </label>
                </div>
@@ -45,10 +43,14 @@
 
            <div class="form-group">
                <label for="comments">Comments</label>
-               <textarea class="form-control" id="comments" rows="3"></textarea>
+               <textarea class="form-control" id="comments" rows="3" ng-model="comments" required></textarea>
            </div>
 
-           <button type="submit" class="btn btn-primary">Submit</button>
+           {{lat}}
+           {{lng}}
+           {{comments}}
+           {{typeOfIssue}}
+           <button type="submit" class="btn btn-primary" ng-click="createIssue(lng,lat,typeOfIssue,comments)">Submit</button>
            <button type="submit" class="btn btn-primary">Cancel</button>
        </form>
     </div>
