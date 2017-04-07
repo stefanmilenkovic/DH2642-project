@@ -13,19 +13,23 @@
             Bike App
             <span class="menu-icon glyphicon glyphicon-transfer" style="float:right;"></span></a>
 </div>
-
-   <table style="color: #e6f5ff; margin: 5px; font-family:Helvetica Neue, Helvetica, Arial, sans-serif;border-collapse: collapse;
+ <hr>
+   <table style="color: #e6f5ff; margin: 5px; line-height: 35px; font-family:Helvetica Neue, Helvetica, Arial, sans-serif;border-collapse: collapse;
     width: 100%;">
+
         <thead>
         <tr>
             <th>Comments</th>
             <th>Date</th>
         </tr>
-        </thead>
+      </thead>
 
         <tbody>
+
         <tr ng-repeat="mark in markers  track by $index">
-            <td> {{mark.message}}</td>
+
+            <td> {{mark.message | limitTo: 15}}</td>
+
             <td>{{mark.time | date:"MM/dd/yyyy "}}</td>
         </tr>
         </tbody>

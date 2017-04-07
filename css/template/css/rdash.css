@@ -226,7 +226,7 @@ body {
 #sidebar-wrapper {
   margin-left: -150px;
   left: -30px;
-  width: 350px;
+  width: 250px;
   position: fixed;
   height: 100%;
   z-index: 999;
