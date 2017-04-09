@@ -1,38 +1,57 @@
 <div class="side-bar right-bar">
     <div class="nicescroll">
-        <ul class="nav">
-            <li class="tab">
-                <a href="#" aria-expanded="false">
-                    <span class="visible-xs"><i class="fa fa-home"></i></span>
-                    <span class="hidden-xs">Create new issue</span>
-                </a>
-            </li>
-        </ul>
+        <h4>Create a new Issues</h4>
+       <form style="margin: 5px;">
 
-        <div class="container">
-            <form>
-                <label>Select the type of issues</label>
-                <div class="radio">
-                    <label><input type="radio" name="hazard">Hazard</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="pothole">Pothole</label>
-                </div>
-                <div class="radio disabled">
-                    <label><input type="radio" name="damage" disabled>Damage</label>
-                </div>
-                <div class="radio disabled">
-                    <label><input type="radio" name="theft" disabled>Theft</label>
-                </div>
-            </form>
-            <form>
-                <div class="form-group">
-                    <label>Comments:</label>
-                    <input type="text" class="form-control" id="issue_comment">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+           <div class="form-group">
+               <label for="longitude">Longitude</label>
+               <input type="number" class="form-control" id="longitude" step="any" ng-model="lng">
+           </div>
+           <div class="form-group">
+               <label for="latitude">Latitude</label>
+               <input type="number" class="form-control" id="latitude" step="any" ng-model="lat">
+           </div>
 
-        </div>
+
+           <fieldset class="form-group">
+               <legend>Select the type of Issues</legend>
+               <div class="form-check">
+                   <label class="form-check-label">
+                       <input type="radio" ng-model="typeOfIssue" value="hazard" >
+                        Hazard
+                   </label>
+               </div>
+               <div class="form-check">
+                   <label class="form-check-label">
+                       <input type="radio" ng-model="typeOfIssue" value="pothole">
+                       Pothole
+                   </label>
+               </div>
+               <div class="form-check">
+                   <label class="form-check-label">
+                       <input type="radio" ng-model="typeOfIssue" value="damage">
+                       Damage
+                   </label>
+               </div>
+               <div class="form-check">
+                   <label class="form-check-label">
+                       <input type="radio" ng-model="typeOfIssue" value="theft">
+                       Theft
+                   </label>
+               </div>
+           </fieldset>
+
+           <div class="form-group">
+               <label for="comments">Comments</label>
+               <textarea class="form-control" id="comments" rows="3" ng-model="comments" required></textarea>
+           </div>
+
+           {{lat}}
+           {{lng}}
+           {{comments}}
+           {{typeOfIssue}}
+           <button type="submit" class="btn btn-primary" ng-click="createIssue(lng,lat,typeOfIssue,comments)">Submit</button>
+           <button type="submit" class="btn btn-primary">Cancel</button>
+       </form>
     </div>
 </div>
