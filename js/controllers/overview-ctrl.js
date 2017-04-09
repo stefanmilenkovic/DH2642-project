@@ -71,8 +71,10 @@ function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService, leafletB
                             lat: issue.latitude,
                             lng: issue.longitude,
                             message: issue.message,
+                            time: issue.timestamp,
                             draggable:false
                         };
+                        console.log(issueObject);
                         $scope.markers.push(issueObject);
                     });
                 }
