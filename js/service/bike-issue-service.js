@@ -59,13 +59,11 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
           $log.info("Post Data Submitted Successfully!");
       },
           function (response) {
-              $log.info(response.statusText);
-      });
-  };
+              $log.info(response.statusText)
+      }
+      )};
 
     return BikeIssueService;
 
 });
 
-
-////Exampel

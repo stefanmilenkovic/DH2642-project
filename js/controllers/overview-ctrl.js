@@ -2,8 +2,8 @@ angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$rootScope','$c
 
 function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueService){
 
-//    $scope.bikeIssueService = BikeIssueService;
-    $scope.markers = new Array();
+    $scope.bikeIssueService = BikeIssueService;
+    $scope.expand_toggle = false;
 
     $scope.issueTypes = [
         {id: 'all', name: 'All types'},
@@ -53,6 +53,10 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
 
    });
 
+  /*  $scope.go = function(mark) {
+        console.log(mark);
+    };*/
+
     $scope.filterIssuesFromInput = function(){
         if ($scope.organisationsFilterTimeout){
             $timeout.cancel($scope.organisationsFilterTimeout);
@@ -65,10 +69,11 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
     };
 
     $scope.retrieveIssues = function () {
-        var promiseIssueData = BikeIssueService.listIssues($scope.issueFilter.queryText, $scope.issueFilter.selectedType.id);
+        var promiseIssueData = $scope.bikeIssueService.listIssues($scope.issueFilter.queryText, $scope.issueFilter.selectedType.id);
         promiseIssueData.then(
             function (response) {
                 if(angular.isDefined(response.data)){
+                    $scope.markers = new Array();
 
                     angular.forEach(response.data, function(issue, issueKey) {
                         console.log(issue);
@@ -76,9 +81,11 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
                             lat: issue.latitude,
                             lng: issue.longitude,
                             message: issue.message,
+                            timestamp:issue.timestamp,
                             draggable:false
                         };
                         $scope.markers.push(issueObject);
+                        console.log($scope.markers);
                     });
                 }
             },

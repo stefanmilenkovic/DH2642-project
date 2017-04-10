@@ -2,7 +2,7 @@
  * Master Controller
  */
 
-angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','$cookieStore', function ($scope, $cookieStore, BikeIssueService) {
+angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','$cookieStore', function ($scope, BikeIssueService, $cookieStore) {
 
     /**
      * Sidebar Toggle & Cookie Control
@@ -103,8 +103,8 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','
             var n = d.getTime();
             var issue = {
                 issue_type: $scope.typeOfIssue,
-                longitude: $scope.lng,
                 latitude: $scope.lat,
+                longitude: $scope.lng,
                 message: $scope.describe,
                 timestamp: n
             };
