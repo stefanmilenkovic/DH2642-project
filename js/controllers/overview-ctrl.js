@@ -1,9 +1,9 @@
-angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$cookieStore', '$timeout', 'BikeIssueService', OverviewCtrl]);
+angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$rootScope','$cookieStore', '$timeout', 'BikeIssueService', OverviewCtrl]);
 
-function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService){
+function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueService){
 
 //    $scope.bikeIssueService = BikeIssueService;
-
+    $scope.markers = new Array();
 
     $scope.issueTypes = [
         {id: 'all', name: 'All types'},
@@ -35,17 +35,23 @@ function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService){
     };
 
     $scope.events = {};
-    $scope.markers = new Array();
+  //$scope.markers = new Array();
 
-    $scope.$on("leafletDirectiveMap.click", function(event, args){
+   $scope.$on("leafletDirectiveMap.click", function(event, args){
         var leafEvent = args.leafletEvent;
         $scope.markers.push({
             lat: leafEvent.latlng.lat,
             lng: leafEvent.latlng.lng,
             draggable:true
         });
+        console.log($scope.markers);
         $scope.showRightBar(leafEvent.latlng.lat, leafEvent.latlng.lng);
     });
+
+   $rootScope.$on('deleteMarker',function(){
+       $scope.markers.pop();
+
+   });
 
     $scope.filterIssuesFromInput = function(){
         if ($scope.organisationsFilterTimeout){
@@ -63,7 +69,6 @@ function OverviewCtrl($scope, $cookieStore, $timeout, BikeIssueService){
         promiseIssueData.then(
             function (response) {
                 if(angular.isDefined(response.data)){
-                    $scope.markers = new Array();
 
                     angular.forEach(response.data, function(issue, issueKey) {
                         console.log(issue);

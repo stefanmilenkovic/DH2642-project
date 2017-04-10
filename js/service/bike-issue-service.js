@@ -8,11 +8,6 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         'content-type': 'application/json; charset=utf-8'
     };
 
-    var postHeaders = {
-        'cache-control': 'no-cache',
-        'x-apikey': '58dcea65f1d5e67930abe587',
-        'content-type': 'application/json'
-    }
     var BikeIssueService ={};
     BikeIssueService.listIssues = function(query, issueType){
 
