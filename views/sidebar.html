@@ -1,21 +1,54 @@
-<ul class="sidebar">
+<!--<ul ng-controller="OverviewCtrl" class="sidebar">
     <li class="sidebar-main">
         <a ng-click="toggleSidebar()">
             Bike App
             <span class="menu-icon glyphicon glyphicon-transfer"></span>
         </a>
     </li>
-    <li class="sidebar-title"><span>NAVIGATION</span></li>
-    <li class="sidebar-list">
-        <a href="#">Overview <span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-    <li class="sidebar-list">
-        <a href="#/dashboard">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-    <li class="sidebar-list">
-        <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
-    </li>
-</ul>
+    <li class="sidebar-title"><span>NAVIGATION</span></li>-->
+
+<div  ng-controller="OverviewCtrl" class="sidebar">
+    <div class="sidebar-main" >
+        <a ng-click="toggleSidebar()" style="color: #99d6ff;">
+            Bike App
+            <span class="menu-icon glyphicon glyphicon-transfer" style="float:right;"></span></a>
+    </div>
+    <hr>
+
+    <table style="color: #e6f5ff; line-height: 35px; font-family:Helvetica Neue, Helvetica, Arial, sans-serif;border-collapse: collapse;
+    width: 100%;">
+
+        <thead>
+        <tr>
+            <th>Comments</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr ng-repeat="mark in markers track by $index" ng-click="go($index)">
+            <td ng-show="commentToggle[$index]" ng-class="{displayEntireComment:commentToggle[$index]}">{{mark.message}}</td>
+            <td ng-hide="commentToggle[$index]">{{mark.message | limitTo: 15}}</td>
+            <td ng-hide="commentToggle[$index]">{{mark.timestamp | date:"MM/dd/yyyy "}}</td>
+            <td ng-show="commentToggle[$index]" ng-class="{displayEntireComment:commentToggle[$index]}">{{mark.timestamp | date:"MM/dd/yyyy "}}</td>
+        </tr>
+
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- <li class="sidebar-list">
+     <a href="#">Overview <span class="menu-icon fa fa-tachometer"></span></a>
+ </li>
+ <li class="sidebar-list">
+     <a href="#/dashboard">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+ </li>
+ <li class="sidebar-list">
+     <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+ </li>
+</ul>-->
 <div class="sidebar-footer">
     <div class="col-xs-6">
         <a href="https://github.com/stefanmilenkovic/DH2642-project" target="_blank">

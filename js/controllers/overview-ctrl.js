@@ -84,6 +84,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
                             timestamp:issue.timestamp,
                             draggable:false
                         };
+                        console.log(issueObject);
                         $scope.markers.push(issueObject);
                         console.log($scope.markers);
                     });
