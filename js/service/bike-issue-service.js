@@ -19,7 +19,7 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         if(angular.isDefined(issueType) && issueType != "all"){
             searchParams.q["issue_type"] = issueType;
         }
-        if(angular.isDefined(query)){
+        if(angular.isDefined(query) && query != ""){
             searchParams.q["message"] = query;
         }
         console.log("Search params: "+JSON.stringify(searchParams));
