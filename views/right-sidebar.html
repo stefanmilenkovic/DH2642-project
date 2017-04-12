@@ -1,7 +1,7 @@
-<div class="side-bar right-bar">
+<div class="side-bar right-bar" ng-controller="MasterCtrl">
     <div class="nicescroll">
         <h4>Create a new Issues</h4>
-       <form style="margin: 5px;">
+       <form style="margin: 5px;" ng-submit="createIssue(issueRegister.$valid)" name="issueRegister" novalidate="novalidate">
 
            <div class="form-group">
                <label for="longitude">Longitude</label>
@@ -12,46 +12,26 @@
                <input type="number" class="form-control" id="latitude" step="any" ng-model="lat">
            </div>
 
-
-           <fieldset class="form-group">
-               <legend>Select the type of Issues</legend>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="hazard" >
-                        Hazard
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="pothole">
-                       Pothole
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="damage">
-                       Damage
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="theft">
-                       Theft
-                   </label>
-               </div>
-           </fieldset>
-
-           <div class="form-group">
-               <label for="comments">Comments</label>
-               <textarea class="form-control" id="comments" rows="3" ng-model="comments" required></textarea>
+           <div class="form-group" ng-class="{'has-error':!issueRegister.typeOfIssue.$valid && (!issueRegister.$pristine && issueRegister.$submitted)}">
+             <label for="typeOfIssue" class="control-label">Select type of Issue</label>
+                 <select name="typeOfIssue" id="typeOfIssue" class="form-control" ng-model="typeOfIssue" required>
+                    <option value="">Please select</option>
+                     <option value="hazard">Hazard</option>
+                     <option value="pothole">Pothole</option>
+                     <option value="damage">Damage</option>
+                    <option value="theft">Theft</option>
+                 </select>
+               <p class="help-block" ng-show="issueRegister.typeOfIssue.$error.required && (!issueRegister.$pristine && issueRegister.$submitted)">Please select type of issue</p>
            </div>
 
-           {{lat}}
-           {{lng}}
-           {{comments}}
-           {{typeOfIssue}}
-           <button type="submit" class="btn btn-primary" ng-click="createIssue(lng,lat,typeOfIssue,comments)">Submit</button>
-           <button type="submit" class="btn btn-primary">Cancel</button>
+           <div class="form-group" ng-class="{'has-error':!issueRegister.describe.$valid && (!issueRegister.$pristine && issueRegister.$submitted)}">
+               <label for="describe" class="control-label">Comments</label>
+               <textarea class="form-control"  rows="3" id="describe" ng-model="describe" name="describe" required></textarea>
+               <p class="help-block" ng-show="issueRegister.describe.$error.required && (!issueRegister.$pristine && issueRegister.$submitted)">This field is required</p>
+           </div>
+
+           <button type="submit" class="btn btn-primary" >Submit</button>
+           <button type="button" class="btn btn-danger" ng-click="hideRightBar()">Cancel</button>
        </form>
     </div>
 </div>

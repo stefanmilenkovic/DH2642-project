@@ -2,21 +2,25 @@
  * Master Controller
  */
 
-angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', function ($scope, BikeIssueService) {
+angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIssueService','$cookieStore', function ($scope, $rootScope, BikeIssueService, $cookieStore) {
 
     /**
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
-    var issue = {};
+
+    $scope.$on('markerArrayLength', function(events, args) {
+        $scope.commentToggle = new Array($rootScope.markers.length);
+        console.log($scope.commentToggle.length);
+    });
 
     $scope.getWidth = function() {
         return window.innerWidth;
     };
 
-    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+   $scope.$watch($scope.getWidth, function(newValue, oldValue) {
         if (newValue >= mobileView) {
-            if (angular.isDefined($cookieStore.get('toggle'))) {
+            if (angular.isDefined($cookieStore.get("toggle"))) {
                 $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
             } else {
                 $scope.toggle = true;
@@ -35,9 +39,6 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', 
         $scope.$apply();
     };
 
-
-
-
     $scope.rightBarSelected = "activity";
     $scope.rightBarTabsDefault = [$scope.rightBarSelected];
 
@@ -48,6 +49,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', 
             return;
         $scope.setSelectedRightBarTab("activity");
     };
+
     $scope.rightBarTabVisible = function(tabKey){
         if(angular.isDefined(tabKey) && $scope.rightBarTabs.indexOf(tabKey.toLowerCase()) != -1)
             return true;
@@ -82,6 +84,20 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', 
     $scope.hideRightBar = function () {
         $scope.isRightBarVisible = false;
         $('#content-wrapper').toggleClass('right-bar-enabled', false);
+        $scope.typeOfIssue="";
+        $scope.describe="";
+        $scope.issueRegister.$pristine = true;
+        $scope.issueRegister.$submitted = false;
+        $scope.$emit('deleteMarker');
+    };
+
+    var hideRightBarWhenSubmit = function () {
+        $scope.isRightBarVisible = false;
+        $('#content-wrapper').toggleClass('right-bar-enabled', false);
+        $scope.typeOfIssue="";
+        $scope.describe="";
+        $scope.issueRegister.$pristine = true;
+        $scope.issueRegister.$submitted = false;
     };
 
     $('.right-bar-toggle').on('click', function(e) {
@@ -89,16 +105,40 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService', 
         $('#wrapper').toggleClass('right-bar-enabled');
     });
 
-    $scope.createIssue = function(lng,lat,typeOfIssue,comments){
-        var d = new Date();
-        var n = d.getTime();
-        var issue = {
-            issue_type: typeOfIssue,
-            longitude: lng,
-            latitude: lat,
-            message: comments,
-            timestamp: n
-        };
-        BikeIssueService.addNewIssue(issue);
+    $scope.go= function(index){
+        if($scope.commentToggle[index] == true)
+            for(var i=0; i<$scope.commentToggle.length;i++){
+                if(i == index)
+                    $scope.commentToggle[index] = false;
+                else
+                    $scope.commentToggle[i] = true;
+            }
+        else
+            for (var i=0; i<$scope.commentToggle.length;i++) {
+                if (i == index)
+                    $scope.commentToggle[index] = true;
+                else
+                    $scope.commentToggle[i] = false;
+            }
     };
+
+    $scope.createIssue = function(valid){
+        if(valid){
+            var d = new Date();
+            var n = d.getTime();
+            var issue = {
+                issue_type: $scope.typeOfIssue,
+                latitude: $scope.lat,
+                longitude: $scope.lng,
+                message: $scope.describe,
+                timestamp: n
+            };
+            BikeIssueService.addNewIssue(issue);
+            hideRightBarWhenSubmit();
+        }
+        else{
+            console.log("Invalid Form");
+        }
+    };
+
 }]);

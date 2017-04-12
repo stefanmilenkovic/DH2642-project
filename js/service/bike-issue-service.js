@@ -8,11 +8,6 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         'content-type': 'application/json; charset=utf-8'
     };
 
-    var postHeaders = {
-        'cache-control': 'no-cache',
-        'x-apikey': '58dcea65f1d5e67930abe587',
-        'content-type': 'application/json'
-    }
     var BikeIssueService ={};
     BikeIssueService.listIssues = function(query, issueType){
 
@@ -24,7 +19,7 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         if(angular.isDefined(issueType) && issueType != "all"){
             searchParams.q["issue_type"] = issueType;
         }
-        if(angular.isDefined(query)){
+        if(angular.isDefined(query) && query != ""){
             searchParams.q["message"] = query;
         }
         console.log("Search params: "+JSON.stringify(searchParams));
@@ -64,13 +59,11 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
           $log.info("Post Data Submitted Successfully!");
       },
           function (response) {
-              $log.info(response.statusText);
-      });
-  };
+              $log.info(response.statusText)
+      }
+      )};
 
     return BikeIssueService;
 
 });
 
-
-////Exampel
