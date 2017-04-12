@@ -20,7 +20,7 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
             searchParams.q["issue_type"] = issueType;
         }
         if(angular.isDefined(query) && query != ""){
-            searchParams.q["message"] = query;
+            searchParams.q["message"] = {"$regex": query};
         }
         console.log("Search params: "+JSON.stringify(searchParams));
 
