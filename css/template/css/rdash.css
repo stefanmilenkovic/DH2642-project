@@ -484,3 +484,29 @@ ul.sidebar .sidebar-list .menu-icon {
   font-size: 28px;
   display: block;
 }
+/**** made Changes********/
+div.sidebar  tbody tr:hover {
+  cursor: pointer;
+  color: #fff;
+  border-left: 3px solid #e99d1a;
+  text-indent: 20px;
+
+}
+/**** made Changes***/
+.displayEntireComment{
+  line-height: 20px;
+  background:  #e99d1a;
+
+}
+/**** made changed****/
+div.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-indent: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

@@ -88,4 +88,21 @@ function MasterCtrl($scope, $cookieStore) {
         e.preventDefault();
         $('#wrapper').toggleClass('right-bar-enabled');
     });
+    
+    $scope.go= function(index){
+        if($scope.commentToggle[index] == true)
+            for(var i=0; i<$scope.commentToggle.length;i++){
+                if(i == index)
+                    $scope.commentToggle[index] = false;
+                else
+                    $scope.commentToggle[i] = true;
+            }
+        else
+            for (var i=0; i<$scope.commentToggle.length;i++) {
+                if (i == index)
+                    $scope.commentToggle[index] = true;
+                else
+                    $scope.commentToggle[i] = false;
+            }
+    }
 }
