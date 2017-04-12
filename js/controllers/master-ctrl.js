@@ -18,7 +18,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         return window.innerWidth;
     };
 
-   $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
         if (newValue >= mobileView) {
             if (angular.isDefined($cookieStore.get("toggle"))) {
                 $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
@@ -104,6 +104,15 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         e.preventDefault();
         $('#wrapper').toggleClass('right-bar-enabled');
     });
+
+    $scope.toggleExpanded = function (item) {
+        if(angular.isUndefined(item.expanded)){
+            item.expanded = true;
+        }
+        else{
+            item.expanded = !item.expanded;
+        }
+    };
 
     $scope.go= function(index){
         if($scope.commentToggle[index] == true)
