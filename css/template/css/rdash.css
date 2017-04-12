@@ -44,15 +44,15 @@ input::-webkit-inner-spin-button {
   body.hamburg #page-wrapper.open #sidebar-wrapper {
     position: fixed;
   }
-  body.hamburg #page-wrapper.open #sidebar-wrapper ul.sidebar li.sidebar-main {
+  body.hamburg #page-wrapper.open #sidebar-wrapper div.sidebar div.sidebar-main {
     margin-left: 0px;
   }
-  body.hamburg #sidebar-wrapper ul.sidebar li.sidebar-main,
+  body.hamburg #sidebar-wrapper div.sidebar div.sidebar-main,
   body.hamburg .row.header .meta {
     margin-left: 70px;
   }
-  body.hamburg #sidebar-wrapper ul.sidebar li.sidebar-main,
-  body.hamburg #page-wrapper.open #sidebar-wrapper ul.sidebar li.sidebar-main {
+  body.hamburg #sidebar-wrapper div.sidebar div.sidebar-main,
+  body.hamburg #page-wrapper.open #sidebar-wrapper div.sidebar div.sidebar-main {
     transition: margin-left 0.4s ease 0s;
   }
 }
@@ -281,17 +281,7 @@ ul.sidebar .sidebar-list a:hover,
   /* Sidebar header and footer color */
   background: #2d3e63;
 }
-ul.sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  text-indent: 20px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
+
 ul.sidebar li a {
   color: #fff;
   display: block;
@@ -306,9 +296,12 @@ ul.sidebar .sidebar-main a {
   font-size: 18px;
   line-height: 60px;
 }
-ul.sidebar .sidebar-main a:hover {
+
+/**** made changed
+div.sidebar tbody tr {
   cursor: pointer;
-}
+}*****/
+
 ul.sidebar .sidebar-main .menu-icon {
   float: right;
   font-size: 18px;
@@ -332,11 +325,7 @@ ul.sidebar .sidebar-list a {
   color: #b2bfdc;
   line-height: 40px;
 }
-ul.sidebar .sidebar-list a:hover {
-  color: #fff;
-  border-left: 3px solid #e99d1a;
-  text-indent: 22px;
-}
+
 ul.sidebar .sidebar-list a:hover .menu-icon {
   text-indent: 25px;
 }

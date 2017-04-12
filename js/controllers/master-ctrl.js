@@ -2,12 +2,17 @@
  * Master Controller
  */
 
-angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','$cookieStore', function ($scope, BikeIssueService, $cookieStore) {
+angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIssueService','$cookieStore', function ($scope, $rootScope, BikeIssueService, $cookieStore) {
 
     /**
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
+
+    $scope.$on('markerArrayLength', function(events, args) {
+        $scope.commentToggle = new Array($rootScope.markers.length);
+        console.log($scope.commentToggle.length);
+    });
 
     $scope.getWidth = function() {
         return window.innerWidth;
@@ -86,11 +91,14 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','
         $scope.$emit('deleteMarker');
     };
 
-    /* $scope.$on('deleteMarker',function(){
-       // $scope.markers.pop();
-        console.log("braodcast works");
-        $scope.removeMarker();
-    }); */
+    var hideRightBarWhenSubmit = function () {
+        $scope.isRightBarVisible = false;
+        $('#content-wrapper').toggleClass('right-bar-enabled', false);
+        $scope.typeOfIssue="";
+        $scope.describe="";
+        $scope.issueRegister.$pristine = true;
+        $scope.issueRegister.$submitted = false;
+    };
 
     $('.right-bar-toggle').on('click', function(e) {
         e.preventDefault();
@@ -126,9 +134,11 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','BikeIssueService','
                 timestamp: n
             };
             BikeIssueService.addNewIssue(issue);
+            hideRightBarWhenSubmit();
         }
         else{
             console.log("Invalid Form");
         }
     };
+
 }]);

@@ -12,36 +12,7 @@
                <input type="number" class="form-control" id="latitude" step="any" ng-model="lat">
            </div>
 
-
-          <!-- <fieldset class="form-group">
-               <legend>Select the type of Issues</legend>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="hazard" name="typeOfIssue" ng-required="!typeOfIssue">
-                        Hazard
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="pothole" name="typeOfIssue" ng-required="!typeOfIssue">
-                       Pothole
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="damage" name="typeOfIssue" ng-required="!typeOfIssue">
-                       Damage
-                   </label>
-               </div>
-               <div class="form-check">
-                   <label class="form-check-label">
-                       <input type="radio" ng-model="typeOfIssue" value="theft" name="typeOfIssue" ng-required="!typeOfIssue">
-                       Theft
-                   </label>
-               </div>
-           </fieldset>-->
-
-           <div class="form-group" ng-class="{'has-error':!issueRegister.typeOfIssue.$valid && (!issueRegister.$pristine || issueRegister.$submitted)}">
+           <div class="form-group" ng-class="{'has-error':!issueRegister.typeOfIssue.$valid && (!issueRegister.$pristine && issueRegister.$submitted)}">
              <label for="typeOfIssue" class="control-label">Select type of Issue</label>
                  <select name="typeOfIssue" id="typeOfIssue" class="form-control" ng-model="typeOfIssue" required>
                     <option value="">Please select</option>
@@ -50,13 +21,13 @@
                      <option value="damage">Damage</option>
                     <option value="theft">Theft</option>
                  </select>
-               <p class="help-block" ng-show="issueRegister.typeOfIssue.$error.required && (!issueRegister.$pristine || issueRegister.$submitted)">Please select type of issue</p>
+               <p class="help-block" ng-show="issueRegister.typeOfIssue.$error.required && (!issueRegister.$pristine && issueRegister.$submitted)">Please select type of issue</p>
            </div>
 
-           <div class="form-group" ng-class="{'has-error':!issueRegister.describe.$valid && (!issueRegister.$pristine || issueRegister.$submitted)}">
+           <div class="form-group" ng-class="{'has-error':!issueRegister.describe.$valid && (!issueRegister.$pristine && issueRegister.$submitted)}">
                <label for="describe" class="control-label">Comments</label>
                <textarea class="form-control"  rows="3" id="describe" ng-model="describe" name="describe" required></textarea>
-               <p class="help-block" ng-show="issueRegister.describe.$error.required && (!issueRegister.$pristine || issueRegister.$submitted)">This field is required</p>
+               <p class="help-block" ng-show="issueRegister.describe.$error.required && (!issueRegister.$pristine && issueRegister.$submitted)">This field is required</p>
            </div>
 
            <button type="submit" class="btn btn-primary" >Submit</button>
