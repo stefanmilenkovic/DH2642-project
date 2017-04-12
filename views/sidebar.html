@@ -4,31 +4,22 @@
             Bike App
             <span class="menu-icon glyphicon glyphicon-transfer" style="float:right;"></span></a>
     </div>
-    <hr>
+    <hr class="m-t-0">
 
-    <table style="color: #e6f5ff; line-height: 35px; font-family:Helvetica Neue, Helvetica, Arial, sans-serif;border-collapse: collapse;
-    width: 100%;">
-
-        <thead>
-        <tr>
-            <th>Comments</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        <tr ng-repeat="mark in markers track by $index" ng-click="go($index)">
-            <td ng-show="commentToggle[$index]" ng-class="{displayEntireComment:commentToggle[$index]}">{{mark.message}}</td>
-            <td ng-hide="commentToggle[$index]">{{mark.message | limitTo: 15}}</td>
-            <td ng-hide="commentToggle[$index]">{{mark.timestamp | date:"MM/dd/yyyy "}}</td>
-            <td ng-show="commentToggle[$index]" ng-class="{displayEntireComment:commentToggle[$index]}">{{mark.timestamp | date:"MM/dd/yyyy "}}</td>
-        </tr>
-
-
-        </tr>
-        </tbody>
-    </table>
+    <ul class="sidebar-content p-0">
+        <li class="row sidebar-list-header">
+            <div class="col-md-7">Comments</div>
+            <div class="col-md-5">Date</div>
+        </li>
+        <li ng-repeat="mark in markers track by $index" ng-click="toggleExpanded(mark)" class="sidebar-item row p-v-10">
+            <div class="col-md-7 m-0">
+                <span ng-if="mark.message.length > 17"><i ng-class="mark.expanded != true ? 'fa-angle-right' : 'fa-angle-down'" class="fa" aria-hidden="true"></i></span>
+                <span ng-if="mark.expanded != true">{{mark.message | limitTo: 17}}</span>
+                <span ng-if="mark.expanded == true">{{mark.message}}</span>
+            </div>
+            <div class="col-md-5 m-0">{{mark.timestamp | date:"MM/dd/yyyy "}}</div>
+        </li>
+    </ul>
 </div>
 <div class="sidebar-footer">
     <div class="col-xs-6">

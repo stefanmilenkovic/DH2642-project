@@ -105,6 +105,15 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         $('#wrapper').toggleClass('right-bar-enabled');
     });
 
+    $scope.toggleExpanded = function (item) {
+        if(angular.isUndefined(item.expanded)){
+            item.expanded = true;
+        }
+        else{
+            item.expanded = !item.expanded;
+        }
+    };
+
     $scope.go= function(index){
         if($scope.commentToggle[index] == true)
             for(var i=0; i<$scope.commentToggle.length;i++){

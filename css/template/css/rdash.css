@@ -12,7 +12,7 @@ input::-webkit-inner-spin-button {
 }
 @media only screen and (min-width: 561px) {
   #page-wrapper.open {
-    padding-left: 250px;
+    padding-left: 350px;
   }
 }
 @media only screen and (max-width: 560px) {
@@ -21,40 +21,7 @@ input::-webkit-inner-spin-button {
   }
 }
 #page-wrapper.open #sidebar-wrapper {
-  left: 150px;
-}
-
-/**
- * Hamburg Menu
- * When the class of 'hamburg' is applied to the body tag of the document, 
- * the sidebar changes it's style to attempt to mimic a menu on a phone app,
- * where the content is overlaying the content, rather than push it.
- */
-@media only screen and (max-width: 560px) {
-  body.hamburg #page-wrapper {
-    padding-left: 0;
-  }
-  body.hamburg #page-wrapper:not(.open) #sidebar-wrapper {
-    position: absolute;
-    left: -100px;
-  }
-  body.hamburg #page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
-    display: none;
-  }
-  body.hamburg #page-wrapper.open #sidebar-wrapper {
-    position: fixed;
-  }
-  body.hamburg #page-wrapper.open #sidebar-wrapper div.sidebar div.sidebar-main {
-    margin-left: 0px;
-  }
-  body.hamburg #sidebar-wrapper div.sidebar div.sidebar-main,
-  body.hamburg .row.header .meta {
-    margin-left: 70px;
-  }
-  body.hamburg #sidebar-wrapper div.sidebar div.sidebar-main,
-  body.hamburg #page-wrapper.open #sidebar-wrapper div.sidebar div.sidebar-main {
-    transition: margin-left 0.4s ease 0s;
-  }
+  left: 250px;
 }
 
 /**
@@ -230,9 +197,9 @@ body {
   height: 100%;
 }
 #sidebar-wrapper {
-  margin-left: -150px;
+  margin-left: -250px;
   left: -30px;
-  width: 250px;
+  width: 350px;
   position: fixed;
   height: 100%;
   z-index: 999;
@@ -274,25 +241,28 @@ div.input-mask {
 #sidebar-wrapper {
   background: #30426a;
 }
-ul.sidebar .sidebar-main a,
+.sidebar .sidebar-main a,
 .sidebar-footer,
-ul.sidebar .sidebar-list a:hover,
-#page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
+.sidebar .sidebar-list a:hover,
+#page-wrapper:not(.open) .sidebar .sidebar-title.separator {
   /* Sidebar header and footer color */
   background: #2d3e63;
 }
 
-ul.sidebar li a {
+.sidebar li a,
+.sidebar .sidebar-main,
+.sidebar-content li{
   color: #fff;
   display: block;
   float: left;
   text-decoration: none;
-  width: 250px;
+  width: 350px;
 }
-ul.sidebar .sidebar-main {
+.sidebar .sidebar-main {
   height: 65px;
+  padding-left:20px;
 }
-ul.sidebar .sidebar-main a {
+.sidebar .sidebar-main a {
   font-size: 18px;
   line-height: 60px;
 }
@@ -302,13 +272,16 @@ div.sidebar tbody tr {
   cursor: pointer;
 }*****/
 
-ul.sidebar .sidebar-main .menu-icon {
+.sidebar .sidebar-main .menu-icon {
   float: right;
   font-size: 18px;
   padding-right: 28px;
   line-height: 60px;
 }
-ul.sidebar .sidebar-title {
+.sidebar .sidebar-list {
+  height: 40px;
+}
+.sidebar .sidebar-title {
   color: #ffffff;
   font-size: 12px;
   height: 35px;
@@ -316,45 +289,46 @@ ul.sidebar .sidebar-title {
   text-transform: uppercase;
   transition: all .6s ease 0s;
 }
-ul.sidebar .sidebar-list {
-  height: 40px;
-}
-ul.sidebar .sidebar-list a {
+.sidebar .sidebar-list a {
   text-indent: 25px;
   font-size: 15px;
   color: #b2bfdc;
   line-height: 40px;
 }
 
-ul.sidebar .sidebar-list a:hover .menu-icon {
+.sidebar .sidebar-list a:hover .menu-icon {
   text-indent: 25px;
 }
-ul.sidebar .sidebar-list .menu-icon {
+.sidebar .sidebar-list .menu-icon {
   float: right;
   padding-right: 29px;
   line-height: 40px;
   width: 70px;
 }
-#page-wrapper:not(.open) ul.sidebar {
+#page-wrapper:not(.open) .sidebar {
   bottom: 0;
 }
-#page-wrapper:not(.open) ul.sidebar .sidebar-title {
+#page-wrapper:not(.open) .sidebar .sidebar-title {
   display: none;
   height: 0px;
   text-indent: -100px;
 }
-#page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
+#page-wrapper:not(.open) .sidebar .sidebar-title.separator {
   display: block;
   height: 2px;
   margin: 13px 0;
 }
-#page-wrapper:not(.open) ul.sidebar .sidebar-list a:hover span {
+#page-wrapper:not(.open) .sidebar .sidebar-list a:hover span {
   border-left: 3px solid #e99d1a;
   text-indent: 22px;
 }
 #page-wrapper:not(.open) .sidebar-footer {
   display: none;
 }
+#page-wrapper:not(.open) .sidebar-content{
+  display: none;
+}
+
 .sidebar-footer {
   position: absolute;
   height: 40px;
@@ -480,11 +454,17 @@ ul.sidebar .sidebar-list .menu-icon {
   display: block;
 }
 /**** made Changes********/
+.sidebar-content .sidebar-item{
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.sidebar-content .sidebar-item:hover,
 div.sidebar  tbody tr:hover {
   cursor: pointer;
   color: #fff;
   border-left: 3px solid #e99d1a;
-  text-indent: 20px;
+  text-indent: 0px;
 
 }
 /**** made Changes***/
@@ -501,7 +481,7 @@ div.sidebar {
   padding: 0;
   margin: 0;
   list-style: none;
-  text-indent: 20px;
+  text-indent: 0px;
   overflow-x: hidden;
   overflow-y: auto;
 }
