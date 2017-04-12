@@ -103,14 +103,15 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         }, 250);
     };
 
-
+    $scope.issueRetrievalStatus = undefined;
     $scope.retrieveIssues = function () {
+        $scope.issueRetrievalStatus = "Filtering...";
         var promiseIssueData = $scope.bikeIssueService.listIssues($scope.issueFilter.queryText, $scope.issueFilter.selectedType.id);
         promiseIssueData.then(
             function (response) {
+                $scope.issueRetrievalStatus = undefined;
                 if(angular.isDefined(response.data)){
                     $rootScope.markers = new Array();
-
 
                     angular.forEach(response.data, function(issue, issueKey) {
                         var issueObject = {
@@ -140,6 +141,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             },
             function (response) {
                 $scope.apiCallStatus = "Error :(";
+                $scope.issueRetrievalStatus = "Error :(";
                 alert("Error: " + JSON.stringify(response));
             }
         );

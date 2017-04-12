@@ -261,10 +261,15 @@ div.input-mask {
 .sidebar .sidebar-main {
   height: 65px;
   padding-left:20px;
+  border-bottom: solid 1px white;
 }
 .sidebar .sidebar-main a {
   font-size: 18px;
   line-height: 60px;
+}
+
+.sidebar-content .sidebar-list-header div{
+  text-decoration: underline;
 }
 
 /**** made changed

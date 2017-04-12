@@ -18,7 +18,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         return window.innerWidth;
     };
 
-   $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
         if (newValue >= mobileView) {
             if (angular.isDefined($cookieStore.get("toggle"))) {
                 $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
