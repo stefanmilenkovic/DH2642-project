@@ -8,8 +8,7 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         'content-type': 'application/json; charset=utf-8'
     };
 
-    var BikeIssueService ={};
-    BikeIssueService.listIssues = function(query, issueType){
+    this.listIssues = function(query, issueType){
 
         var searchParams = {
             max: 1000,
@@ -47,23 +46,18 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         }
         )};*/
 
-    BikeIssueService.addNewIssue = function(issue) {
-      var req = {
-          method: 'POST',
-          url: 'https://bikereport-b1e1.restdb.io/rest/issues',
-          headers: requestHeaders,
-          data : issue
-      };
+    this.addNewIssue = function(issue) {
 
-      $http(req).then(function (response) {
-          $log.info("Post Data Submitted Successfully!");
-      },
-          function (response) {
-              $log.info(response.statusText)
-      }
-      )};
+        var promise = $http({
+            method: 'POST',
+            url: 'https://bikereport-b1e1.restdb.io/rest/issues',
+            headers: requestHeaders,
+            data: issue
+        });
+        return promise;
+    };
 
-    return BikeIssueService;
+    return this;
 
 });
 
