@@ -10,4 +10,10 @@
                 ng-model="issueFilter.selectedType"></select>
     </div>
     <div ng-if="issueRetrievalStatus !== undefined" class="col-md-3 p-t-10">{{issueRetrievalStatus}}</div>
+    <form name="optionalLayers" ng-controller="bikeRacksCtrl">
+      <label>Bike racks
+        <input type="checkbox" ng-model="showBikeRacks.value"
+        ng-change=showBikeRacks.change()>
+      </label>
+    </form>
 </div>
