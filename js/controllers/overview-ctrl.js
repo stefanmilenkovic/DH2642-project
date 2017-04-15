@@ -34,25 +34,25 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         scrollWheelZoom: false
     };
 
-    $scope.awesomeMarkerIcon_pothole = {
+    $rootScope.awesomeMarkerIcon_pothole = {
         type: 'awesomeMarker',
         icon: 'bicycle',
         markerColor: 'gray',
         prefix: 'fa'
     };
-    $scope.awesomeMarkerIcon_hazard = {
+    $rootScope.awesomeMarkerIcon_hazard = {
         type: 'awesomeMarker',
         icon: 'bicycle',
         markerColor: 'red',
         prefix: 'fa'
     };
-    $scope.awesomeMarkerIcon_damage = {
+    $rootScope.awesomeMarkerIcon_damage = {
         type: 'awesomeMarker',
         icon: 'bicycle',
         markerColor: 'green',
         prefix: 'fa'
     };
-    $scope.awesomeMarkerIcon_theft = {
+    $rootScope.awesomeMarkerIcon_theft = {
         type: 'awesomeMarker',
         icon: 'bicycle',
         markerColor: 'orange',
@@ -64,9 +64,18 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
 
    $scope.$on("leafletDirectiveMap.click", function(event, args){
         var leafEvent = args.leafletEvent;
+
+        for(var i=0; i<$rootScope.markers.length; i++){
+            if($rootScope.markers[i].in_progress == true){
+                $rootScope.markers.splice(i, 1);
+                i--;
+            }
+        }
+
         $rootScope.markers.push({
             lat: leafEvent.latlng.lat,
             lng: leafEvent.latlng.lng,
+            in_progress: true,
             label: {
                 message: "Hey, add your comments in the form",
                 options: {
@@ -103,6 +112,38 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         }, 250);
     };
 
+    $rootScope.buildMarkers = function (issues) {
+        $rootScope.markers = new Array();
+
+        angular.forEach(issues, function(issue, issueKey) {
+
+            var issueObject = {
+                lat: issue.latitude,
+                lng: issue.longitude,
+                message: issue.message,
+                timestamp:issue.timestamp,
+                issue_type:issue.issue_type,
+                draggable:false
+            };
+            if(issueObject.issue_type=="pothole"){
+                issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
+            }
+            if(issueObject.issue_type=="hazard"){
+                issueObject.icon = $rootScope.awesomeMarkerIcon_hazard;
+            }
+            if(issueObject.issue_type=="damage"){
+                issueObject.icon = $rootScope.awesomeMarkerIcon_damage;
+            }
+            if(issueObject.issue_type=="theft"){
+                issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
+            }
+            $rootScope.markers.push(issueObject);
+            console.log("Adding: "+JSON.stringify(issueObject));
+        })
+    };
+
+
+
     $scope.issueRetrievalStatus = undefined;
     $scope.retrieveIssues = function () {
         $scope.issueRetrievalStatus = "Filtering...";
@@ -111,32 +152,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             function (response) {
                 $scope.issueRetrievalStatus = undefined;
                 if(angular.isDefined(response.data)){
-                    $rootScope.markers = new Array();
-
-                    angular.forEach(response.data, function(issue, issueKey) {
-                        var issueObject = {
-                            lat: issue.latitude,
-                            lng: issue.longitude,
-                            message: issue.message,
-                            timestamp:issue.timestamp,
-                            issue_type:issue.issue_type,
-                            draggable:false
-                        };
-                        if(issueObject.issue_type=="pothole"){
-                            issueObject.icon = $scope.awesomeMarkerIcon_pothole;
-                        }
-                        if(issueObject.issue_type=="hazard"){
-                            issueObject.icon = $scope.awesomeMarkerIcon_hazard;
-                        }
-                        if(issueObject.issue_type=="damage"){
-                            issueObject.icon = $scope.awesomeMarkerIcon_damage;
-                        }
-                        if(issueObject.issue_type=="theft"){
-                            issueObject.icon = $scope.awesomeMarkerIcon_theft;
-                        }
-                        $rootScope.markers.push(issueObject);
-                    });
-                    $scope.$emit('markerArrayLength', $rootScope.markers.length);
+                    $rootScope.buildMarkers(response.data);
                 }
             },
             function (response) {
