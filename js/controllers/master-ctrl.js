@@ -13,7 +13,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     var layersNames = {
       bikeRacks: "Bike racks"
-    }
+    };
 
     $scope.layers = {
       overlays: {

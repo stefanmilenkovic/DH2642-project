@@ -1,6 +1,6 @@
-angular.module('bikeApp').controller('bikeRacksCtrl', ['$scope', '$rootScope', '$log', 'BikeRacksService', bikeRacksCtrl]);
+angular.module('bikeApp').controller('BikeRacksCtrl', ['$scope', '$rootScope', '$log', 'BikeRacksService', BikeRacksCtrl]);
 
-function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
+function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
   $scope.bikeRacksService = BikeRacksService;
 
@@ -25,7 +25,9 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
         bikeRacksRetrievalStatus = undefined;
         if(angular.isDefined(response.data)){
 
-          $rootScope.markers = new Array();
+          //$rootScope.markers = new Array();
+
+          console.log("RACKS: "+JSON.stringify(response.data));
 
           angular.forEach(response.data, function(rack, rackId) {
             var rackObject = {
