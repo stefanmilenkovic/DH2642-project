@@ -11,6 +11,19 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     $rootScope.markers = new Array();
 
+    $scope.layers = {
+      overlays: {
+        bikeRacks: {
+          name: "Bike racks",
+          type: "featureGroup",
+          visible: true,
+          group: "Layers"
+        }
+      }};
+
+    $scope.bikeRacksLayer = function() { console.log("Loading bike racks layer"); $scope.$emit("loadBikeRacksLayer", {}) };
+    $scope.bikeRacksLayer();
+
     $scope.$on('markerArrayLength', function(events, args) {
         $scope.commentToggle = new Array($rootScope.markers.length);
         console.log($scope.commentToggle.length);

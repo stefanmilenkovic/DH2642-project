@@ -2,13 +2,6 @@ angular.module('bikeApp').controller('bikeRacksCtrl', ['$scope', '$rootScope', '
 
 function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
-  var showBikeRacks = this;
-  showBikeRacks.value = true;
-
-  showBikeRacks.change = function() {
-
-  };
-
   $scope.bikeRacksService = BikeRacksService;
 
   $scope.bikeParkingIcon = L.icon({
@@ -19,6 +12,10 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
     popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
   });
 
+  $rootScope.$on("loadBikeRacksLayer", function(){
+    $log.log("Retrieving bike racks")
+    $scope.retrieveRacks();
+  });
 
   $scope.bikeRacksRetrievalStatus = undefined;
   $scope.retrieveRacks = function () {
@@ -32,10 +29,11 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
           angular.forEach(response.data, function(rack, rackId) {
             var rackObject = {
+              layer:"Bike racks",
               lat: parseFloat(rack.latitude),
               lng: parseFloat(rack.longitude),
               draggable: false,
-              message: "Capacity: " + rack.rack_capac + "<br> Address: " + rack.unitdesc
+              message: "<b>Capacity:</b> " + rack.rack_capac + "<br> <b>Address:</b> " + rack.unitdesc
             };
             rackObject.icon = $scope.bikeParkingIcon;
             $rootScope.markers.push(rackObject);
@@ -49,6 +47,4 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
       }
     );
   };
-
-  $scope.retrieveRacks();
 };
