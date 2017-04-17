@@ -3,7 +3,7 @@ angular.module('bikeApp').controller('OverviewCtrl', ['$scope', '$rootScope', '$
 
 function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, leafletBoundsHelpers, BikeIssueService){
 
-  //angular.extend(this, $controller('BikeRacksCtrl', {$scope: $scope}));
+  angular.extend(this, $controller('BikeRacksCtrl', {$scope: $scope}));
 
   $scope.bikeIssueService = BikeIssueService;
   $scope.expand_toggle = false;
