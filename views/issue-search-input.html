@@ -9,4 +9,5 @@
                 ng-options="option.name for option in issueTypes track by option.id"
                 ng-model="issueFilter.selectedType"></select>
     </div>
+    <div ng-if="issueRetrievalStatus !== undefined" class="col-md-3 p-t-10">{{issueRetrievalStatus}}</div>
 </div>

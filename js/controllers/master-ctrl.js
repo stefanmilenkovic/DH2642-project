@@ -2,12 +2,27 @@
  * Master Controller
  */
 
-angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIssueService','$cookieStore', function ($scope, $rootScope, BikeIssueService, $cookieStore) {
+angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeout','BikeIssueService','$cookieStore', function ($scope, $rootScope, $timeout, BikeIssueService, $cookieStore) {
 
     /**
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
+
+    $rootScope.markers = new Array();
+
+    $scope.layers = {
+      overlays: {
+        bikeRacks: {
+          name: "Bike racks",
+          type: "featureGroup",
+          visible: true,
+          group: "Layers"
+        }
+      }};
+
+    $scope.bikeRacksLayer = function() { console.log("Loading bike racks layer"); $scope.$emit("loadBikeRacksLayer", {}) };
+    $scope.bikeRacksLayer();
 
     $scope.$on('markerArrayLength', function(events, args) {
         $scope.commentToggle = new Array($rootScope.markers.length);
@@ -18,7 +33,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         return window.innerWidth;
     };
 
-   $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
         if (newValue >= mobileView) {
             if (angular.isDefined($cookieStore.get("toggle"))) {
                 $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
@@ -91,19 +106,19 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
         $scope.$emit('deleteMarker');
     };
 
-    var hideRightBarWhenSubmit = function () {
-        $scope.isRightBarVisible = false;
-        $('#content-wrapper').toggleClass('right-bar-enabled', false);
-        $scope.typeOfIssue="";
-        $scope.describe="";
-        $scope.issueRegister.$pristine = true;
-        $scope.issueRegister.$submitted = false;
-    };
-
     $('.right-bar-toggle').on('click', function(e) {
         e.preventDefault();
         $('#wrapper').toggleClass('right-bar-enabled');
     });
+
+    $scope.toggleExpanded = function (item) {
+        if(angular.isUndefined(item.expanded)){
+            item.expanded = true;
+        }
+        else{
+            item.expanded = !item.expanded;
+        }
+    };
 
     $scope.go= function(index){
         if($scope.commentToggle[index] == true)
@@ -122,8 +137,10 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
             }
     };
 
+
     $scope.createIssue = function(valid){
         if(valid){
+            $scope.issueRetrievalStatus = "Creating...";
             var d = new Date();
             var n = d.getTime();
             var issue = {
@@ -133,12 +150,59 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','BikeIs
                 message: $scope.describe,
                 timestamp: n
             };
-            BikeIssueService.addNewIssue(issue);
-            hideRightBarWhenSubmit();
+            var promiseData = BikeIssueService.addNewIssue(issue);
+            promiseData.then(
+                function (successResponse) {
+
+                    var issueObject = {
+                        lat: issue.latitude,
+                        lng: issue.longitude,
+                        message: issue.message,
+                        issue_type:issue.issue_type,
+                        draggable:false
+                    };
+                    if(issueObject.issue_type=="pothole"){
+                        issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
+                    }
+                    if(issueObject.issue_type=="hazard"){
+                        issueObject.icon = $rootScope.awesomeMarkerIcon_hazard;
+                    }
+                    if(issueObject.issue_type=="damage"){
+                        issueObject.icon = $rootScope.awesomeMarkerIcon_damage;
+                    }
+                    if(issueObject.issue_type=="theft"){
+                        issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
+                    }
+                    console.log("Before pushing: "+JSON.stringify(issueObject));
+
+                    $rootScope.markers.splice(($rootScope.markers.length - 1), 1);
+
+                    $timeout(function() {
+                        $rootScope.markers.push(issueObject);
+                    }, 50);
+
+                    $scope.issueRetrievalStatus = undefined;
+                    hideRightBarWhenSubmit();
+                },
+                function (errorResponse) {
+                    $scope.issueRetrievalStatus = "Error :(";
+                    hideRightBarWhenSubmit();
+                }
+            );
         }
         else{
             console.log("Invalid Form");
         }
     };
+
+    var hideRightBarWhenSubmit = function () {
+        $scope.isRightBarVisible = false;
+        $('#content-wrapper').toggleClass('right-bar-enabled', false);
+        $scope.typeOfIssue="";
+        $scope.describe="";
+        $scope.issueRegister.$pristine = true;
+        $scope.issueRegister.$submitted = false;
+    };
+
 
 }]);
