@@ -18,7 +18,7 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
   });
 
   $scope.bikeRacksRetrievalStatus = undefined;
-  $scope.retrieveRacks = function () {
+  $scope.retrieveRacks = function (layerName) {
     var promiseRacksData = $scope.bikeRacksService.listRacks();
     promiseRacksData.then(
       function (response) {
@@ -29,7 +29,7 @@ function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
           angular.forEach(response.data, function(rack, rackId) {
             var rackObject = {
-              layer:"Bike racks",
+              layer: layerName,
               lat: parseFloat(rack.latitude),
               lng: parseFloat(rack.longitude),
               draggable: false,

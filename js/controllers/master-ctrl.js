@@ -11,17 +11,21 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     $rootScope.markers = new Array();
 
+    var layersNames = {
+      bikeRacks: "Bike racks"
+    }
+
     $scope.layers = {
       overlays: {
         bikeRacks: {
-          name: "Bike racks",
+          name: layersNames.bikeRacks,
           type: "featureGroup",
           visible: true,
           group: "Layers"
         }
       }};
 
-    $scope.bikeRacksLayer = function() { console.log("Loading bike racks layer"); $scope.$emit("loadBikeRacksLayer", {}) };
+    $scope.bikeRacksLayer = function() { $scope.$emit("loadBikeRacksLayer", layersNames.bikeRacks) };
     $scope.bikeRacksLayer();
 
     $scope.$on('markerArrayLength', function(events, args) {
