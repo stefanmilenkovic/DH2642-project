@@ -11,7 +11,12 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     $rootScope.markers = new Array();
     $rootScope.issues = undefined;
-    $rootScope.bikeRacksCheckbox = {checked: false};
+    $rootScope.bikeRacksCheckbox = {
+        checked: false
+    };
+    if(angular.isDefined($cookieStore.get('showBikeRacks'))){
+        $rootScope.bikeRacksCheckbox["checked"] = $cookieStore.get('showBikeRacks');
+    }
 
     $scope.$on('markerArrayLength', function(events, args) {
         $scope.commentToggle = new Array($rootScope.markers.length);

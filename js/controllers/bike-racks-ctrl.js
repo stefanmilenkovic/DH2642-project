@@ -1,11 +1,12 @@
-angular.module('bikeApp').controller('BikeRacksCtrl', ['$scope', '$rootScope', '$log', 'BikeRacksService', BikeRacksCtrl]);
+angular.module('bikeApp').controller('BikeRacksCtrl', ['$scope', '$rootScope', '$log','$cookieStore', 'BikeRacksService', BikeRacksCtrl]);
 
-function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
+function BikeRacksCtrl($scope, $rootScope, $log, $cookieStore, BikeRacksService){
 
   $scope.bikeRacksService = BikeRacksService;
 
   $scope.showBikeRacks = function () {
     $rootScope.buildMarkers();
+    $cookieStore.put('showBikeRacks', $rootScope.bikeRacksCheckbox.checked);
   };
 
   $scope.bikeRacksRetrievalStatus = undefined;

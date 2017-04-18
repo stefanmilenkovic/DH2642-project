@@ -23,22 +23,21 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
     if(angular.isDefined($cookieStore.get('userZoom'))){
         $scope.seattle["zoom"] = parseFloat($cookieStore.get('userZoom'));
     }
-    console.log("Loaded Seattle: "+JSON.stringify($scope.seattle));
 
 
 
-  $scope.issueTypes = [
-    {id: 'all', name: 'All types'},
-    {id: 'hazard', name: 'Hazard'},
-    {id: 'pothole', name: 'Pothole'},
-    {id: 'damage', name: 'Damage'},
-    {id: 'theft', name: 'Theft'}
-  ];
+    $scope.issueTypes = [
+        {id: 'all', name: 'All types'},
+        {id: 'hazard', name: 'Hazard'},
+        {id: 'pothole', name: 'Pothole'},
+        {id: 'damage', name: 'Damage'},
+        {id: 'theft', name: 'Theft'}
+    ];
 
-  $scope.issueFilter = {
-    queryText: undefined,
-    selectedType: $scope.issueTypes[0]
-  };
+    $scope.issueFilter = {
+        queryText: undefined,
+        selectedType: $scope.issueTypes[0]
+    };
 
     $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([
         [ 47.77532914630374, -122.86628723144531 ],
