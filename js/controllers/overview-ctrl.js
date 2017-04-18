@@ -50,12 +50,18 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
     ]);
 
     $scope.tiles = {
-      url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      options: {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18
+      url: 'http://stamen-tiles-{s}.a.ssl.fastly.net/toposm-features/{z}/{x}/{y}.{ext}',
+      options : {
+        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      	subdomains: 'abcd',
+      	minZoom: 0,
+      	maxZoom: 20,
+      	ext: 'png',
+      	bounds: [[22, -132], [51, -56]],
+      	opacity: 0.9
       }
     };
+
     $scope.defaults = {
       scrollWheelZoom: false
     };
