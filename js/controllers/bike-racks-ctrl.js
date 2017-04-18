@@ -10,6 +10,7 @@ function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
   $scope.bikeRacksRetrievalStatus = undefined;
   $scope.retrieveRacks = function (layerName) {
+    $scope.bikeRacksRetrievalStatus = "Retrieving bike racks data";
     var promiseRacksData = $scope.bikeRacksService.listRacks();
     promiseRacksData.then(
       function (response) {
@@ -20,8 +21,8 @@ function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
       },
       function (response) {
         $scope.bikeRacksRetrievalStatus = undefined;
-        $scope.apiCallStatus = "Error";
-        $log.error("Error: " + JSON.stringify(response));
+        $scope.apiCallStatus = "Error on retrieval of bike racks :(";
+        console.error("Error: " + JSON.stringify(response));
       }
     );
   };

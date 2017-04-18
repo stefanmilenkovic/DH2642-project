@@ -141,7 +141,6 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
             $rootScope.markers.push(issueObject);
         });
 
-        console.log("$rootScope.bikeRacksChecked: " + $rootScope.bikeRacksCheckbox.checked);
         if($rootScope.bikeRacksCheckbox.checked && $scope.seattle.zoom >= 15) {
             angular.forEach($rootScope.bikeRacks, function (rack, rackId) {
                 //Check if this bike racks is between bounds of the current map view
@@ -245,8 +244,9 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
             },
             function (response) {
                 $scope.apiCallStatus = "Error :(";
-                $scope.issueRetrievalStatus = "Error :(";
-                alert("Error: " + JSON.stringify(response));
+                $scope.issueRetrievalStatus = "Error on retrieval of issues :(";
+                console.error("Error: " + JSON.stringify(response));
+                //alert("Error: " + JSON.stringify(response));
             }
         );
       }, 300);
