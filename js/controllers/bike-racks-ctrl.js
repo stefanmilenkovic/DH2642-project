@@ -11,6 +11,7 @@ function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
   $scope.bikeRacksRetrievalStatus = undefined;
   $scope.retrieveRacks = function (layerName) {
     $scope.bikeRacksRetrievalStatus = "Retrieving bike racks data";
+    $rootScope.bikeRacks = [];
     var promiseRacksData = $scope.bikeRacksService.listRacks();
     promiseRacksData.then(
       function (response) {

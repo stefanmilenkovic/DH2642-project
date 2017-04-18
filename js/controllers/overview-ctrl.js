@@ -234,6 +234,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
       }
 
       $scope.issueRetrievalTimeout = $timeout(function() {
+        $rootScope.issues = [];
         $scope.issueRetrievalStatus = "Filtering...";
         var promiseIssueData = $scope.bikeIssueService.listIssues($scope.issueFilter.queryText, $scope.issueFilter.selectedType.id, $scope.bounds);
         promiseIssueData.then(
