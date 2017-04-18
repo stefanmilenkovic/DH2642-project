@@ -59,8 +59,32 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         prefix: 'fa'
     };
 
-    $scope.events = {};
-  //$scope.markers = new Array();
+    $rootScope.awesomeMarkerIcon_pothole_highlight = {
+        type: 'awesomeMarker',
+        icon: 'bicycle',
+        markerColor: 'gray',
+        prefix: 'fa-2x'
+    };
+    $rootScope.awesomeMarkerIcon_hazard_highlight = {
+        type: 'awesomeMarker',
+        icon: 'bicycle',
+        markerColor: 'red',
+        prefix: 'fa-2x'
+    };
+    $rootScope.awesomeMarkerIcon_damage_highlight = {
+        type: 'awesomeMarker',
+        icon: 'bicycle',
+        markerColor: 'green',
+        prefix: 'fa-2x'
+
+    };
+    $rootScope.awesomeMarkerIcon_theft_highlight = {
+        type: 'awesomeMarker',
+        icon: 'bicycle',
+        markerColor: 'orange',
+        prefix: 'fa-2x'
+
+    };
 
    $scope.$on("leafletDirectiveMap.click", function(event, args){
         var leafEvent = args.leafletEvent;
@@ -76,6 +100,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             lat: leafEvent.latlng.lat,
             lng: leafEvent.latlng.lng,
             in_progress: true,
+            icon:{},
             label: {
                 message: "Hey, add your comments in the form",
                 options: {
@@ -86,20 +111,10 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         $scope.showRightBar(leafEvent.latlng.lat, leafEvent.latlng.lng);
     });
 
-   /*$rootScope.$on("leafletDirectiveMarker.dragend", function(event, args){
-        $scope.position.lat = args.model.lat;
-        $scope.position.lng = args.model.lng;
-    });*/
-
 
    $rootScope.$on('deleteMarker',function(){
        $rootScope.markers.pop();
-
    });
-
-  /*$scope.go = function(mark) {
-        console.log(mark);
-    };*/
 
     $scope.filterIssuesFromInput = function(){
         if ($scope.organisationsFilterTimeout){
@@ -111,6 +126,29 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             $scope.retrieveIssues();
         }, 250);
     };
+
+  /* $rootScope. highlightSelected = function(index){
+       console.log( JSON.stringify($rootScope.markers[index]));
+        if($rootScope.markers[index].issue_type == "pothole"){
+            $rootScope.markers[index].icon.iconSize = [50,100];
+            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_pothole_highlight ;
+        }
+        if($rootScope.markers[index].issue_type =="hazard"){
+            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_hazard_highlight ;
+        }
+        if($rootScope.markers[index].issue_type =="damage"){
+            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_damage_highlight ;
+        }
+        if($rootScope.markers[index].issue_type  =="theft"){
+            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_theft_highlight ;
+        }
+    };*/
+
+  /*  $rootScope. highlightSelected = function(index){
+        console.log($rootScope.markers[index].icon);
+        $rootScope.markers[index].iconSize =  [25, 41];
+        $rootScope.markers[index].iconAnchor = [12, 41];
+    }*/
 
     $rootScope.buildMarkers = function (issues) {
         $rootScope.markers = new Array();

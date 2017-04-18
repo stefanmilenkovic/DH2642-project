@@ -459,16 +459,50 @@ div.sidebar tbody tr {
   display: block;
 }
 /**** made Changes********/
-.sidebar-content .sidebar-item{
+/*.sidebar-content .sidebar-item{
   word-break: keep-all;
   overflow-wrap: break-word;
 }
 
-.sidebar-content .sidebar-item:hover,
-div.sidebar  tbody tr:hover {
+.sidebar-content .sidebar-item:hover{
   cursor: pointer;
   color: #fff;
   border-left: 3px solid #e99d1a;
+  text-indent: 0px;
+
+}*/
+
+.sidebar-content{
+  word-break: keep-all;
+  overflow-wrap: break-word;
+    color: #fff;
+}
+
+.sidebarPothole:hover{
+  cursor: pointer;
+
+  background: #767676;
+  text-indent: 0px;
+
+}
+
+.sidebarTheft:hover{
+  cursor: pointer;
+    background: #e99d1a;
+  text-indent: 0px;
+
+}
+
+ .sidebarHazard:hover{
+  cursor: pointer;
+     background: #f32528;
+  text-indent: 0px;
+
+}
+
+ .sidebarDamage:hover{
+  cursor: pointer;
+     background: #8CC710;
   text-indent: 0px;
 
 }

@@ -11,11 +11,6 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     $rootScope.markers = new Array();
 
-    $scope.$on('markerArrayLength', function(events, args) {
-        $scope.commentToggle = new Array($rootScope.markers.length);
-        console.log($scope.commentToggle.length);
-    });
-
     $scope.getWidth = function() {
         return window.innerWidth;
     };
@@ -107,23 +102,6 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
         }
     };
 
-    $scope.go= function(index){
-        if($scope.commentToggle[index] == true)
-            for(var i=0; i<$scope.commentToggle.length;i++){
-                if(i == index)
-                    $scope.commentToggle[index] = false;
-                else
-                    $scope.commentToggle[i] = true;
-            }
-        else
-            for (var i=0; i<$scope.commentToggle.length;i++) {
-                if (i == index)
-                    $scope.commentToggle[index] = true;
-                else
-                    $scope.commentToggle[i] = false;
-            }
-    };
-
 
     $scope.createIssue = function(valid){
         if(valid){
@@ -160,7 +138,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
                     if(issueObject.issue_type=="theft"){
                         issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
                     }
-                    console.log("Before pushing: "+JSON.stringify(issueObject));
+                   // console.log("Before pushing: "+JSON.stringify(issueObject));
 
                     $rootScope.markers.splice(($rootScope.markers.length - 1), 1);
 
