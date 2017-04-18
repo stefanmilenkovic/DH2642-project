@@ -10,6 +10,8 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
     var mobileView = 992;
 
     $rootScope.markers = new Array();
+    $rootScope.issues = undefined;
+    $rootScope.bikeRacksCheckbox = {checked: false};
 
     $scope.$on('markerArrayLength', function(events, args) {
         $scope.commentToggle = new Array($rootScope.markers.length);

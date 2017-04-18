@@ -9,7 +9,7 @@
             <div class="col-md-7 m-0">Comments</div>
             <div class="col-md-5 m-0">Date</div>
         </li>
-        <li ng-repeat="mark in markers track by $index" ng-click="toggleExpanded(mark)" class="sidebar-item row p-v-10">
+        <li ng-repeat="mark in markers | filter: filterMarkersForIssues track by $index" ng-click="toggleExpanded(mark)" class="sidebar-item row p-v-10">
             <div class="col-md-7 m-0">
                 <span ng-if="mark.message.length > 17"><i ng-class="mark.expanded != true ? 'fa-angle-right' : 'fa-angle-down'" class="fa" aria-hidden="true"></i></span>
                 <span ng-if="mark.expanded != true">{{mark.message | limitTo: 17}}</span>

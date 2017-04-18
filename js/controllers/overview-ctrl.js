@@ -95,56 +95,88 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
     });
 
 
-  $rootScope.$on('deleteMarker',function(){
-    $rootScope.markers.pop();
+    $rootScope.$on('deleteMarker',function(){
+        $rootScope.markers.pop();
+    });
 
-  });
+    $scope.filterIssuesFromInput = function(){
+      if ($scope.organisationsFilterTimeout){
+        $timeout.cancel($scope.organisationsFilterTimeout);
+      }
 
-  /*$scope.go = function(mark) {
-  console.log(mark);
-};*/
-
-$scope.filterIssuesFromInput = function(){
-  if ($scope.organisationsFilterTimeout){
-    $timeout.cancel($scope.organisationsFilterTimeout);
-  }
-
-  $scope.organisationsFilterTimeout = $timeout(function() {
-    console.log("Should filter from: "+JSON.stringify($scope.issueFilter));
-    $scope.retrieveIssues();
-  }, 250);
-};
-
-$rootScope.buildMarkers = function (issues) {
-  $rootScope.markers = new Array();
-
-  console.log("Should build markers for "+issues.length);
-
-  angular.forEach(issues, function(issue, issueKey) {
-
-    var issueObject = {
-      lat: issue.latitude,
-      lng: issue.longitude,
-      message: issue.message,
-      timestamp:issue.timestamp,
-      issue_type:issue.issue_type,
-      draggable:false
+      $scope.organisationsFilterTimeout = $timeout(function() {
+        console.log("Should filter from: "+JSON.stringify($scope.issueFilter));
+        $scope.retrieveIssues();
+      }, 250);
     };
-    if(issueObject.issue_type=="pothole"){
-      issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
-    }
-    if(issueObject.issue_type=="hazard"){
-      issueObject.icon = $rootScope.awesomeMarkerIcon_hazard;
-    }
-    if(issueObject.issue_type=="damage"){
-      issueObject.icon = $rootScope.awesomeMarkerIcon_damage;
-    }
-    if(issueObject.issue_type=="theft"){
-      issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
-    }
-    $rootScope.markers.push(issueObject);
-  })
-};
+
+    $rootScope.buildMarkers = function () {
+        $rootScope.markers = new Array();
+
+        console.log("Should build markers for " + $rootScope.issues.length);
+
+        /* Build markers for issues */
+        angular.forEach($rootScope.issues, function (issue, issueKey) {
+
+            var issueObject = {
+                lat: issue.latitude,
+                lng: issue.longitude,
+                message: issue.message,
+                timestamp: issue.timestamp,
+                issue_type: issue.issue_type,
+                draggable: false
+            };
+            if (issueObject.issue_type == "pothole") {
+                issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
+            }
+            if (issueObject.issue_type == "hazard") {
+                issueObject.icon = $rootScope.awesomeMarkerIcon_hazard;
+            }
+            if (issueObject.issue_type == "damage") {
+                issueObject.icon = $rootScope.awesomeMarkerIcon_damage;
+            }
+            if (issueObject.issue_type == "theft") {
+                issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
+            }
+            $rootScope.markers.push(issueObject);
+        });
+
+        console.log("$rootScope.bikeRacksChecked: " + $rootScope.bikeRacksCheckbox.checked);
+        if($rootScope.bikeRacksCheckbox.checked && $scope.seattle.zoom >= 15) {
+            angular.forEach($rootScope.bikeRacks, function (rack, rackId) {
+                //Check if this bike racks is between bounds of the current map view
+                if($scope.isBetweenLengths(rack.latitude, $scope.bounds.southWest.lat, $scope.bounds.northEast.lat) &&
+                        $scope.isBetweenLengths(rack.longitude, $scope.bounds.southWest.lng, $scope.bounds.northEast.lng)) {
+                    var rackObject = {
+                        //layer: layerName,
+                        lat: parseFloat(rack.latitude),
+                        lng: parseFloat(rack.longitude),
+                        draggable: false,
+                        message: "<b>Capacity:</b> " + rack.rack_capac + "<br> <b>Address:</b> " + rack.unitdesc,
+                        icon: {
+                            iconUrl: './img/bikeparking.png',
+                            iconSize: [32, 32], // size of the icon
+                            iconAnchor: [0, 0], // point of the icon which will correspond to marker's location
+                            popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
+                        }
+                    };
+                    $rootScope.markers.push(rackObject);
+                }
+            });
+        }
+
+        $scope.$emit('markerArrayLength', $rootScope.markers.length);
+    };
+
+    $scope.isBetweenLengths = function (lengthToCompare, length1, lenght2) {
+        if(length1 <= lenght2 && lengthToCompare >= length1 && lengthToCompare <= lenght2){
+            return true;
+        }
+        else if(length1 > lenght2 && lengthToCompare <= length1 && lengthToCompare >= lenght2){
+            return true;
+        }
+        return false;
+    };
 
     $scope.$on('leafletDirectiveMap.zoomend', function(event){
         if ($scope.filterTimeout){
@@ -152,12 +184,6 @@ $rootScope.buildMarkers = function (issues) {
         }
 
         $scope.filterTimeout = $timeout(function() {
-          console.log("Eventttttttt: "+JSON.stringify($scope.doubleEventCounter));
-
-          console.log("Location: " + JSON.stringify($scope.seattle));
-          console.log("Bounds: " + JSON.stringify($scope.bounds));
-          console.log("seattle: " + JSON.stringify($scope.seattle));
-
           $scope.retrieveIssues();
           //$scope.testAddCorners();
         }, 100);
@@ -165,9 +191,6 @@ $rootScope.buildMarkers = function (issues) {
 
     $scope.$on('leafletDirectiveMap.dragend', function(event){
         $timeout(function() {
-          console.log("Location: "+JSON.stringify($scope.seattle));
-          console.log("Bounds: "+JSON.stringify($scope.bounds));
-          console.log("seattle: "+JSON.stringify($scope.seattle));
 
             $scope.retrieveIssues();
             //$scope.testAddCorners();
@@ -217,9 +240,8 @@ $rootScope.buildMarkers = function (issues) {
         promiseIssueData.then(
             function (response) {
                 $scope.issueRetrievalStatus = undefined;
-                if (angular.isDefined(response.data)) {
-                    $rootScope.buildMarkers(response.data);
-                }
+                $rootScope.issues = response.data;
+                $rootScope.buildMarkers();
             },
             function (response) {
                 $scope.apiCallStatus = "Error :(";

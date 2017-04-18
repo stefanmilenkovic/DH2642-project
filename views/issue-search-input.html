@@ -11,8 +11,9 @@
     </div>
     <div ng-if="issueRetrievalStatus !== undefined" class="col-md-3 p-t-10">{{issueRetrievalStatus}}</div>
     <div ng-controller="BikeRacksCtrl">
-        <label>Bike racks
-            <input type="checkbox" ng-model="bikeRacks.isChecked" ng-change="showBikeRacks()"">
+        <label>
+            <input type="checkbox" ng-model="bikeRacksCheckbox.checked" ng-change="showBikeRacks()">
+            Show bike racks
         </label>
     </div>
 </div>
