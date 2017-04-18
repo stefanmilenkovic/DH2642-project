@@ -24,8 +24,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
         $scope.seattle["zoom"] = parseFloat($cookieStore.get('userZoom'));
     }
 
-
-
+    //Setting filter from cookies if present
     $scope.issueTypes = [
         {id: 'all', name: 'All types'},
         {id: 'hazard', name: 'Hazard'},
@@ -38,6 +37,12 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
         queryText: undefined,
         selectedType: $scope.issueTypes[0]
     };
+    if(angular.isDefined($cookieStore.get('issueFilterText'))){
+        $scope.issueFilter.queryText = $cookieStore.get('issueFilterText');
+    }
+    if(angular.isDefined($cookieStore.get('issueFilterType'))){
+        $scope.issueFilter.selectedType = $cookieStore.get('issueFilterType');
+    }
 
     $scope.bounds = leafletBoundsHelpers.createBoundsFromArray([
         [ 47.77532914630374, -122.86628723144531 ],
@@ -119,7 +124,10 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
 
       $scope.organisationsFilterTimeout = $timeout(function() {
         console.log("Should filter from: "+JSON.stringify($scope.issueFilter));
+
         $scope.retrieveIssues();
+        $cookieStore.put('issueFilterText', $scope.issueFilter.queryText);
+        $cookieStore.put('issueFilterType', $scope.issueFilter.selectedType);
       }, 250);
     };
 
