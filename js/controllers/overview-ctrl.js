@@ -159,7 +159,7 @@ $rootScope.buildMarkers = function (issues) {
           console.log("seattle: " + JSON.stringify($scope.seattle));
 
           $scope.retrieveIssues();
-          $scope.testAddCorners();
+          //$scope.testAddCorners();
         }, 100);
     });
 
@@ -170,7 +170,7 @@ $rootScope.buildMarkers = function (issues) {
           console.log("seattle: "+JSON.stringify($scope.seattle));
 
             $scope.retrieveIssues();
-            $scope.testAddCorners();
+            //$scope.testAddCorners();
         }, 100);
     });
 
