@@ -115,8 +115,6 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
 
         console.log("Should build markers for " + $rootScope.issues.length);
 
-        var iconSizeMeasure = $scope.seattle.zoom * 3;
-
         /* Build markers for issues */
         angular.forEach($rootScope.issues, function (issue, issueKey) {
 
@@ -140,8 +138,6 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
             if (issueObject.issue_type == "theft") {
                 issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
             }
-            issueObject.icon.iconSize = [iconSizeMeasure, iconSizeMeasure];
-            console.log("IconSize: "+JSON.stringify(issueObject.icon.iconSize));
             $rootScope.markers.push(issueObject);
         });
 
@@ -158,7 +154,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
                         message: "<b>Capacity:</b> " + rack.rack_capac + "<br> <b>Address:</b> " + rack.unitdesc,
                         icon: {
                             iconUrl: './img/bikeparking.png',
-                            iconSize: [iconSizeMeasure, iconSizeMeasure], // size of the icon
+                            iconSize: [32, 32], // size of the icon
                             iconAnchor: [0, 0], // point of the icon which will correspond to marker's location
                             popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
                         }
