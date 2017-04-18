@@ -8,6 +8,25 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
   $scope.bikeIssueService = BikeIssueService;
   $scope.expand_toggle = false;
 
+    $scope.seattle = {
+        lat: 47.60,
+        lng: -122.33,
+        zoom: 11
+    };
+    //Setting values from cookie store
+    if(angular.isDefined($cookieStore.get('centerLat'))){
+        $scope.seattle["lat"] = parseFloat($cookieStore.get('centerLat'));
+    }
+    if(angular.isDefined($cookieStore.get('centerLng'))){
+        $scope.seattle["lng"] = parseFloat($cookieStore.get('centerLng'));
+    }
+    if(angular.isDefined($cookieStore.get('userZoom'))){
+        $scope.seattle["zoom"] = parseFloat($cookieStore.get('userZoom'));
+    }
+    console.log("Loaded Seattle: "+JSON.stringify($scope.seattle));
+
+
+
   $scope.issueTypes = [
     {id: 'all', name: 'All types'},
     {id: 'hazard', name: 'Hazard'},
@@ -26,11 +45,6 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
         [ 47.47823216312885, -121.79374694824219 ]
     ]);
 
-    $scope.seattle = {
-      lat: 47.60,
-      lng: -122.33,
-      zoom: 11
-    };
     $scope.tiles = {
       url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       options: {
@@ -183,14 +197,16 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
         }
 
         $scope.filterTimeout = $timeout(function() {
-          $scope.retrieveIssues();
+            $cookieStore.put('userZoom', $scope.seattle.zoom);
+            $scope.retrieveIssues();
           //$scope.testAddCorners();
         }, 100);
     });
 
     $scope.$on('leafletDirectiveMap.dragend', function(event){
         $timeout(function() {
-
+            $cookieStore.put('centerLat', $scope.seattle.lat);
+            $cookieStore.put('centerLng', $scope.seattle.lng);
             $scope.retrieveIssues();
             //$scope.testAddCorners();
         }, 100);
