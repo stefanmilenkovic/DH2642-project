@@ -59,32 +59,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         prefix: 'fa'
     };
 
-    $rootScope.awesomeMarkerIcon_pothole_highlight = {
-        type: 'awesomeMarker',
-        icon: 'bicycle',
-        markerColor: 'gray',
-        prefix: 'fa-2x'
-    };
-    $rootScope.awesomeMarkerIcon_hazard_highlight = {
-        type: 'awesomeMarker',
-        icon: 'bicycle',
-        markerColor: 'red',
-        prefix: 'fa-2x'
-    };
-    $rootScope.awesomeMarkerIcon_damage_highlight = {
-        type: 'awesomeMarker',
-        icon: 'bicycle',
-        markerColor: 'green',
-        prefix: 'fa-2x'
-
-    };
-    $rootScope.awesomeMarkerIcon_theft_highlight = {
-        type: 'awesomeMarker',
-        icon: 'bicycle',
-        markerColor: 'orange',
-        prefix: 'fa-2x'
-
-    };
+    $scope.events = {};
 
    $scope.$on("leafletDirectiveMap.click", function(event, args){
         var leafEvent = args.leafletEvent;
@@ -100,7 +75,9 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             lat: leafEvent.latlng.lat,
             lng: leafEvent.latlng.lng,
             in_progress: true,
-            icon:{},
+            icon:{
+                opacity: 0.5
+            },
             label: {
                 message: "Hey, add your comments in the form",
                 options: {
@@ -127,28 +104,15 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
         }, 250);
     };
 
-  /* $rootScope. highlightSelected = function(index){
-       console.log( JSON.stringify($rootScope.markers[index]));
-        if($rootScope.markers[index].issue_type == "pothole"){
-            $rootScope.markers[index].icon.iconSize = [50,100];
-            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_pothole_highlight ;
-        }
-        if($rootScope.markers[index].issue_type =="hazard"){
-            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_hazard_highlight ;
-        }
-        if($rootScope.markers[index].issue_type =="damage"){
-            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_damage_highlight ;
-        }
-        if($rootScope.markers[index].issue_type  =="theft"){
-            $rootScope.markers[index].icon = $rootScope.awesomeMarkerIcon_theft_highlight ;
-        }
-    };*/
+   $scope.$on("leafletDirectiveMarker.mouseover", function(event, args){
+        var index = args.modelName;
+        $scope.markers[index].opacity = 1;
+    });
 
-  /*  $rootScope. highlightSelected = function(index){
-        console.log($rootScope.markers[index].icon);
-        $rootScope.markers[index].iconSize =  [25, 41];
-        $rootScope.markers[index].iconAnchor = [12, 41];
-    }*/
+   $scope.$on("leafletDirectiveMarker.mouseout", function(event, args){
+       var index = args.modelName;
+        $scope.markers[index].opacity = 0.5;
+    });
 
     $rootScope.buildMarkers = function (issues) {
         $rootScope.markers = new Array();
@@ -161,7 +125,9 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
                 message: issue.message,
                 timestamp:issue.timestamp,
                 issue_type:issue.issue_type,
-                draggable:false
+                draggable:false,
+                opacity: 0.5
+
             };
             if(issueObject.issue_type=="pothole"){
                 issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
@@ -175,6 +141,7 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
             if(issueObject.issue_type=="theft"){
                 issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
             }
+
             $rootScope.markers.push(issueObject);
             console.log("Adding: "+JSON.stringify(issueObject));
         })

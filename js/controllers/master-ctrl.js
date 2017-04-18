@@ -8,6 +8,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
+    var previousIndex = -1;
 
     $rootScope.markers = new Array();
 
@@ -93,15 +94,36 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
         $('#wrapper').toggleClass('right-bar-enabled');
     });
 
-    $scope.toggleExpanded = function (item) {
-        if(angular.isUndefined(item.expanded)){
-            item.expanded = true;
+    $scope.toggleExpanded = function (item, presentIndex) {
+        console.log("I am clicked "+presentIndex);
+        if(previousIndex == -1) {
+            previousIndex = presentIndex;
+        }else if(previousIndex != presentIndex){
+            $rootScope.markers[previousIndex].opacity =0.5;
+            //$rootScope.markers[presentIndex].focus = true;
+            previousIndex = presentIndex;
         }
+        $rootScope.markers[presentIndex].opacity = 1;
+        if (angular.isUndefined(item.expanded)) {
+                item.expanded = true;
+              //  $rootScope.markers[presentIndex].focus = true;
+            }
         else{
             item.expanded = !item.expanded;
+           // $rootScope.markers[presentIndex].focus = true;
+
         }
     };
 
+    $scope.highLight = function (presentIndex) {
+        if(previousIndex == -1) {
+            previousIndex = presentIndex;
+        }else if(previousIndex != presentIndex){
+            $rootScope.markers[previousIndex].opacity =0.5;
+            previousIndex = presentIndex;
+        }
+        $rootScope.markers[presentIndex].opacity = 1;
+    };
 
     $scope.createIssue = function(valid){
         if(valid){

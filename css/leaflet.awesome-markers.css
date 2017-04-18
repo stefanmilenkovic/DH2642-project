@@ -16,6 +16,22 @@ Version: 1.0
   text-align: center;
 }
 
+.awesome-markerHighlight {
+  background: url('../images/markers-soft@2x.png') no-repeat 0 0;
+  width: 70px;
+  height: 92px;
+  position:absolute;
+  left:0;
+  top:0;
+  display: block;
+  text-align: center;
+}
+.awesome-marker-shadowHighlight {
+  background: url('../images/markers-shadow@2x.png') no-repeat 0 0;
+  width: 36px;
+  height: 16px;
+}
+
 .awesome-marker-shadow {
   background: url('../images/markers-shadow.png') no-repeat 0 0;
   width: 36px;
