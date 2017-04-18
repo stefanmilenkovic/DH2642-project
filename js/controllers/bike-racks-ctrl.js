@@ -8,7 +8,7 @@ function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
     if ($scope.bikeRacks.isChecked) {
       $scope.retrieveRacks();
     } else {
-      $scope.layers.overlays.bikeRacks.visible = false;
+      //$scope.layers.overlays.bikeRacks.visible = false;
     }
   };
 
@@ -26,7 +26,7 @@ function BikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
 
           angular.forEach(response.data, function(rack, rackId) {
             var rackObject = {
-              layer: layerName,
+              //layer: layerName,
               lat: parseFloat(rack.latitude),
               lng: parseFloat(rack.longitude),
               draggable: false,

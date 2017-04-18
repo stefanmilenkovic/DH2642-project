@@ -11,20 +11,6 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
 
     $rootScope.markers = new Array();
 
-    var layersNames = {
-      bikeRacks: "bikeRacks"
-    };
-
-    $scope.layers = {
-      overlays: {
-        bikeRacks: {
-          name: layersNames.bikeRacks,
-          type: "group",
-          visible: true,
-          group: "Layers"
-        }
-      }};
-
     $scope.$on('markerArrayLength', function(events, args) {
         $scope.commentToggle = new Array($rootScope.markers.length);
         console.log($scope.commentToggle.length);
