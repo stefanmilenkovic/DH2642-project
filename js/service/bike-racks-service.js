@@ -9,7 +9,7 @@ angular.module('bikeApp').factory('BikeRacksService', function ($http,$log) {
     var BikeRacksService ={};
     BikeRacksService.listRacks = function(){
 
-              var searchParams = "?$select=latitude,longitude,rack_capac,unitdesc&$limit=10";
+              var searchParams = "?$select=latitude,longitude,rack_capac,unitdesc";
 
               var url = 'https://data.seattle.gov/resource/fxh3-tqdm.json' + searchParams;
               var promise = $http({

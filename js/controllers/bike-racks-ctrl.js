@@ -1,50 +1,33 @@
-angular.module('bikeApp').controller('bikeRacksCtrl', ['$scope', '$rootScope', '$log', 'BikeRacksService', bikeRacksCtrl]);
+angular.module('bikeApp').controller('BikeRacksCtrl', ['$scope', '$rootScope', '$log','$cookieStore', 'BikeRacksService', BikeRacksCtrl]);
 
-function bikeRacksCtrl($scope, $rootScope, $log, BikeRacksService){
+function BikeRacksCtrl($scope, $rootScope, $log, $cookieStore, BikeRacksService){
 
   $scope.bikeRacksService = BikeRacksService;
 
-  $scope.bikeParkingIcon = L.icon({
-    iconUrl: './img/bikeparking.png',
-
-    iconSize:     [32, 32], // size of the icon
-    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-  });
-
-  $rootScope.$on("loadBikeRacksLayer", function(){
-    $log.log("Retrieving bike racks")
-    $scope.retrieveRacks();
-  });
+  $scope.showBikeRacks = function () {
+    $rootScope.buildMarkers();
+    $cookieStore.put('showBikeRacks', $rootScope.bikeRacksCheckbox.checked);
+  };
 
   $scope.bikeRacksRetrievalStatus = undefined;
-  $scope.retrieveRacks = function () {
+  $scope.retrieveRacks = function (layerName) {
+    $scope.bikeRacksRetrievalStatus = "Retrieving bike racks data";
+    $rootScope.bikeRacks = [];
     var promiseRacksData = $scope.bikeRacksService.listRacks();
     promiseRacksData.then(
       function (response) {
-        bikeRacksRetrievalStatus = undefined;
+        $scope.bikeRacksRetrievalStatus = undefined;
         if(angular.isDefined(response.data)){
-
-          $rootScope.markers = new Array();
-
-          angular.forEach(response.data, function(rack, rackId) {
-            var rackObject = {
-              layer:"Bike racks",
-              lat: parseFloat(rack.latitude),
-              lng: parseFloat(rack.longitude),
-              draggable: false,
-              message: "<b>Capacity:</b> " + rack.rack_capac + "<br> <b>Address:</b> " + rack.unitdesc
-            };
-            rackObject.icon = $scope.bikeParkingIcon;
-            $rootScope.markers.push(rackObject);
-          });
-          $scope.$emit('markerArrayLength', $rootScope.markers.length);
+          $rootScope.bikeRacks = response.data;
         }
       },
       function (response) {
-        $scope.apiCallStatus = "Error";
-        $log.error("Error: " + JSON.stringify(response));
+        $scope.bikeRacksRetrievalStatus = undefined;
+        $scope.apiCallStatus = "Error on retrieval of bike racks :(";
+        console.error("Error: " + JSON.stringify(response));
       }
     );
   };
+
+  $scope.retrieveRacks();
 };
