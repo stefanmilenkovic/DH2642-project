@@ -524,3 +524,29 @@ div.sidebar {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.box{
+  width: 15px;
+  height: 15px;
+  float: left;
+  border: 0.5px solid;
+}
+
+.hazard{
+  background-color:  #f32528 ;
+}
+
+.damage{
+  background-color:  #8CC710 ;
+}
+
+.pothole{
+  background-color: #767676 ;
+}
+
+.theft{
+  background-color:#e99d1a ;
+}
+
+
+

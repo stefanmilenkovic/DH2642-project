@@ -9,11 +9,11 @@
                 ng-options="option.name for option in issueTypes track by option.id"
                 ng-model="issueFilter.selectedType"></select>
     </div>
-    <div ng-if="issueRetrievalStatus !== undefined" class="col-md-3 p-t-10">{{issueRetrievalStatus}}</div>
-    <div style="float: right">
-        <div class="box red">Harzard</div>
-        <div class="box green">Theft </div>
-        <div class="box blue"> Pothole</div>
-        <div class="box blue"> Damage</div>
+    <div ng-if="issueRetrievalStatus !== undefined" class="col-md-1 p-t-10">{{issueRetrievalStatus}}</div>
+    <div style="float:right; margin-top:1%;">
+        <div style="display:inline-block;"><div class="box hazard"></div>Harzard</div>
+        <div style="display:inline-block;"><div class="box pothole"> </div>Pothole</div>
+        <div style="display: inline-block;"><div class="box damage"> </div>Damage</div>
+        <div style="display: inline-block;"><div class="box theft"></div>Theft</div>
     </div>
 </div>
