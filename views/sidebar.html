@@ -1,4 +1,4 @@
-<div  ng-controller="OverviewCtrl" class="sidebar">
+<div ng-controller="SidebarCtrl" class="sidebar">
     <div class="sidebar-main" >
         <a ng-click="toggleSidebar()" style="color: #99d6ff;">
             Bike App
@@ -9,7 +9,7 @@
             <div class="col-md-7 m-0">Comments</div>
             <div class="col-md-5 m-0">Date</div>
         </li>
-        <li ng-repeat="mark in markers track by $index" ng-click="toggleExpanded(mark, $index);"  ng-mouseover="highLight($index);" ng-mouseout="highLightRemove($index);"
+        <li ng-repeat="mark in markers | filter: filterMarkersForIssues track by $index" ng-click="toggleExpanded(mark, $index);"  ng-mouseover="highLight($index);" ng-mouseout="highLightRemove($index);"
             ng-class="{sidebarPothole:mark.issue_type =='pothole', sidebarHazard:mark.issue_type == 'hazard', sidebarDamage:mark.issue_type == 'damage', sidebarTheft:mark.issue_type == 'theft'}" class="row p-v-10">
             <div class="col-md-7 m-0">
                 <span ng-if="mark.message.length > 17">

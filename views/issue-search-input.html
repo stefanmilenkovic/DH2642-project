@@ -9,7 +9,16 @@
                 ng-options="option.name for option in issueTypes track by option.id"
                 ng-model="issueFilter.selectedType"></select>
     </div>
-    <div ng-if="issueRetrievalStatus !== undefined" class="col-md-1 p-t-10">{{issueRetrievalStatus}}</div>
+    <div class="col-md-3 p-t-10">
+        <label>
+            <input type="checkbox" ng-model="bikeRacksCheckbox.checked" ng-change="showBikeRacks()">
+            Show bike racks
+        </label>
+    </div>
+    <div ng-if="issueRetrievalStatus !== undefined || bikeRacksRetrievalStatus != undefined" class="col-md-3 p-t-10">
+        <span ng-if="issueRetrievalStatus != undefined">{{issueRetrievalStatus}}</span>
+        <span ng-if="bikeRacksRetrievalStatus != undefined">{{bikeRacksRetrievalStatus}}</span>
+    </div>
     <div style="float:right; margin-top:1%;">
         <div style="display:inline-block;"><div class="box hazard"></div>Harzard</div>
         <div style="display:inline-block;"><div class="box pothole"> </div>Pothole</div>

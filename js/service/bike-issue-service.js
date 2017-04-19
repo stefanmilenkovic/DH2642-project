@@ -8,7 +8,7 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         'content-type': 'application/json; charset=utf-8'
     };
 
-    this.listIssues = function(query, issueType){
+    this.listIssues = function(query, issueType, bounds){
 
         var searchParams = {
             max: 1000,
@@ -20,6 +20,23 @@ angular.module('bikeApp').factory('BikeIssueService', function ($http,$log) {
         }
         if(angular.isDefined(query) && query != ""){
             searchParams.q["message"] = {"$regex": query};
+        }
+        if(angular.isDefined(bounds)){
+            searchParams.q["longitude"] = {};
+            if(bounds.northEast.lng > bounds.southWest.lng){
+                searchParams.q["longitude"]["$bt"] = [bounds.southWest.lng, bounds.northEast.lng];
+            }
+            else {
+                searchParams.q["longitude"]["$bt"] = [bounds.northEast.lng, bounds.southWest.lng];
+            }
+
+            searchParams.q["latitude"] = {};
+            if(bounds.northEast.lat > bounds.southWest.lat){
+                searchParams.q["latitude"]["$bt"] = [bounds.southWest.lat, bounds.northEast.lat];
+            }
+            else {
+                searchParams.q["latitude"]["$bt"] = [bounds.northEast.lat, bounds.southWest.lat];
+            }
         }
         console.log("Search params: "+JSON.stringify(searchParams));
 

@@ -1,34 +1,8 @@
 <!-- Header Bar -->
 <div class="row header p-10 m-0">
   <issue-search-input></issue-search-input>
-
 </div>
-
-  <!--
-  <a href="#" ng-click="resetAndToggleRightBar()" class="right-bar-toggle waves-effect waves-light w-m-50 text-center">
-    <i ng-class="isRightBarVisible === true ? 'fa-caret-right' : 'fa-caret-left'" class="fa fa-lg font-1c3" aria-hidden="true"></i>
-  </a>
-</div>
-
-
-<div class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-  <div class="col-xs-12">
-    <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
-  </div>
-</div>-->
-
-
 <div class="col-md-12 p-0" style="min-height:480px;">
-
-  <leaflet width="100%" height="775px" center="seattle" tiles="tiles" defaults="defaults" bounds="bounds" markers="markers" event-broadcast="events"></leaflet>
+  <leaflet width="100%" height="775px" center="seattle" bounds="bounds" tiles="tiles" defaults="defaults" markers="markers" event-broadcast="events">
+  </leaflet>
 </div>
-  <!--
-
-<div class="row">
-  filter: {{issueFilter}}
-</div>
-
-<script type="text/javascript">
-
-</script>-->
-

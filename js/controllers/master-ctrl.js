@@ -11,6 +11,18 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
     var previousIndex = -1;
 
     $rootScope.markers = new Array();
+    $rootScope.issues = undefined;
+    $rootScope.bikeRacksCheckbox = {
+        checked: false
+    };
+    if(angular.isDefined($cookieStore.get('showBikeRacks'))){
+        $rootScope.bikeRacksCheckbox["checked"] = $cookieStore.get('showBikeRacks');
+    }
+
+    $scope.$on('markerArrayLength', function(events, args) {
+        $scope.commentToggle = new Array($rootScope.markers.length);
+        console.log($scope.commentToggle.length);
+    });
 
     $scope.getWidth = function() {
         return window.innerWidth;
