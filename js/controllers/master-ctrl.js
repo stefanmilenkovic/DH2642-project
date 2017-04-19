@@ -8,6 +8,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
      * Sidebar Toggle & Cookie Control
      */
     var mobileView = 992;
+    var previousIndex = -1;
 
     $rootScope.markers = new Array();
     $rootScope.issues = undefined;
@@ -106,30 +107,24 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
     });
 
     $scope.toggleExpanded = function (item) {
-        if(angular.isUndefined(item.expanded)){
-            item.expanded = true;
-        }
+        if (angular.isUndefined(item.expanded)) {
+                item.expanded = true;
+            }
         else{
             item.expanded = !item.expanded;
         }
     };
 
-    $scope.go= function(index){
-        if($scope.commentToggle[index] == true)
-            for(var i=0; i<$scope.commentToggle.length;i++){
-                if(i == index)
-                    $scope.commentToggle[index] = false;
-                else
-                    $scope.commentToggle[i] = true;
-            }
-        else
-            for (var i=0; i<$scope.commentToggle.length;i++) {
-                if (i == index)
-                    $scope.commentToggle[index] = true;
-                else
-                    $scope.commentToggle[i] = false;
-            }
+    $scope.highLight = function (presentIndex) {
+        $rootScope.markers[presentIndex].opacity = 1;
+        $rootScope.markers[presentIndex].focus = true;
     };
+
+    $scope.highLightRemove = function (presentIndex) {
+            $rootScope.markers[presentIndex].opacity = 0.5;
+            $rootScope.markers[presentIndex].focus = false;
+    };
+
 
 
     $scope.createIssue = function(valid){
@@ -167,7 +162,7 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
                     if(issueObject.issue_type=="theft"){
                         issueObject.icon = $rootScope.awesomeMarkerIcon_theft;
                     }
-                    console.log("Before pushing: "+JSON.stringify(issueObject));
+                   // console.log("Before pushing: "+JSON.stringify(issueObject));
 
                     $rootScope.markers.splice(($rootScope.markers.length - 1), 1);
 

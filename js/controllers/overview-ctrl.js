@@ -98,18 +98,21 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
         }
       }
 
-      $rootScope.markers.push({
-        lat: leafEvent.latlng.lat,
-        lng: leafEvent.latlng.lng,
-        in_progress: true,
-        label: {
-          message: "Hey, add your comments in the form",
-          options: {
-            noHide: true
-          }
-        }
-      });
-      $scope.showRightBar(leafEvent.latlng.lat, leafEvent.latlng.lng);
+        $rootScope.markers.push({
+            lat: leafEvent.latlng.lat,
+            lng: leafEvent.latlng.lng,
+            in_progress: true,
+            icon:{
+                opacity: 0.5
+            },
+            label: {
+                message: "Hey, add your comments in the form",
+                options: {
+                    noHide: true
+                }
+            }
+        });
+        $scope.showRightBar(leafEvent.latlng.lat, leafEvent.latlng.lng);
     });
 
 
@@ -131,6 +134,18 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
       }, 250);
     };
 
+   $scope.$on("leafletDirectiveMarker.mouseover", function(event, args){
+        var index = args.modelName;
+        console.log(index);
+       $scope.focusIndex = index;
+        $scope.markers[index].opacity = 1;
+    });
+
+   $scope.$on("leafletDirectiveMarker.mouseout", function(event, args){
+       var index = args.modelName;
+        $scope.markers[index].opacity = 0.5;
+    });
+
     $rootScope.buildMarkers = function () {
         $rootScope.markers = new Array();
 
@@ -145,7 +160,9 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
                 message: issue.message,
                 timestamp: issue.timestamp,
                 issue_type: issue.issue_type,
-                draggable: false
+                draggable: false,
+                opacity: 0.5
+
             };
             if (issueObject.issue_type == "pothole") {
                 issueObject.icon = $rootScope.awesomeMarkerIcon_pothole;
