@@ -9,7 +9,7 @@ We have created an online reporting system for cyclists in Seattle. This system 
 * 'Damage'
 * 'Theft'
 
-Using the open data from the [City of Seattle] (https://data.seattle.gov) we collect the position of all the bike racks in the city and place markers on the map.
+Using the open data from the [City of Seattle](https://data.seattle.gov) we collect the position of all the bike racks in the city and place markers on the map.
 
 More informartion in the [Wiki](https://github.com/stefanmilenkovic/DH2642-project/wiki).
 
