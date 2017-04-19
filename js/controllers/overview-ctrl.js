@@ -106,6 +106,8 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, BikeIssueServi
 
    $scope.$on("leafletDirectiveMarker.mouseover", function(event, args){
         var index = args.modelName;
+        console.log(index);
+       $scope.focusIndex = index;
         $scope.markers[index].opacity = 1;
     });
 

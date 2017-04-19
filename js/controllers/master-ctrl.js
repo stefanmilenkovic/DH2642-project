@@ -94,36 +94,26 @@ angular.module('bikeApp').controller("MasterCtrl",['$scope','$rootScope','$timeo
         $('#wrapper').toggleClass('right-bar-enabled');
     });
 
-    $scope.toggleExpanded = function (item, presentIndex) {
-        console.log("I am clicked "+presentIndex);
-        if(previousIndex == -1) {
-            previousIndex = presentIndex;
-        }else if(previousIndex != presentIndex){
-            $rootScope.markers[previousIndex].opacity =0.5;
-            //$rootScope.markers[presentIndex].focus = true;
-            previousIndex = presentIndex;
-        }
-        $rootScope.markers[presentIndex].opacity = 1;
+    $scope.toggleExpanded = function (item) {
         if (angular.isUndefined(item.expanded)) {
                 item.expanded = true;
-              //  $rootScope.markers[presentIndex].focus = true;
             }
         else{
             item.expanded = !item.expanded;
-           // $rootScope.markers[presentIndex].focus = true;
-
         }
     };
 
     $scope.highLight = function (presentIndex) {
-        if(previousIndex == -1) {
-            previousIndex = presentIndex;
-        }else if(previousIndex != presentIndex){
-            $rootScope.markers[previousIndex].opacity =0.5;
-            previousIndex = presentIndex;
-        }
         $rootScope.markers[presentIndex].opacity = 1;
+        $rootScope.markers[presentIndex].focus = true;
     };
+
+    $scope.highLightRemove = function (presentIndex) {
+            $rootScope.markers[presentIndex].opacity = 0.5;
+            $rootScope.markers[presentIndex].focus = false;
+    };
+
+
 
     $scope.createIssue = function(valid){
         if(valid){
