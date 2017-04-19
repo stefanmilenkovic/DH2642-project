@@ -50,15 +50,11 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
     ]);
 
     $scope.tiles = {
-      url: 'http://stamen-tiles-{s}.a.ssl.fastly.net/toposm-features/{z}/{x}/{y}.{ext}',
+      url: 'http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey={apikey}',
       options : {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      	subdomains: 'abcd',
-      	minZoom: 0,
-      	maxZoom: 20,
-      	ext: 'png',
-      	bounds: [[22, -132], [51, -56]],
-      	opacity: 0.9
+        attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      	maxZoom: 22,
+      	apikey: 'd495145c6bba46ba9f7d10b611d49cbd'
       }
     };
 
