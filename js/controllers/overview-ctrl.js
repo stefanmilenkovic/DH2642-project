@@ -147,11 +147,19 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
     });
 
     $rootScope.buildMarkers = function () {
-        $rootScope.markers = new Array();
-
         console.log("Should build markers for " + $rootScope.issues.length);
 
+        /* Save marker in progress if there is any such */
+        var markerInProgress = undefined;
+        for(var i=0; i<$rootScope.markers.length; i++){
+            if($rootScope.markers[i].in_progress == true){
+                markerInProgress = $rootScope.markers[i];
+            }
+        }
+        //console.log("In progress: "+JSON.stringify(markerInProgress));
+
         /* Build markers for issues */
+        $rootScope.markers = new Array();
         angular.forEach($rootScope.issues, function (issue, issueKey) {
 
             var issueObject = {
@@ -178,6 +186,11 @@ function OverviewCtrl($scope, $rootScope, $cookieStore, $timeout, $controller, l
             }
             $rootScope.markers.push(issueObject);
         });
+
+        //Add marker in progress if there was one
+        if(angular.isDefined(markerInProgress)){
+            $rootScope.markers.push(markerInProgress);
+        }
 
         if($rootScope.bikeRacksCheckbox.checked && $scope.seattle.zoom >= 15) {
             angular.forEach($rootScope.bikeRacks, function (rack, rackId) {
