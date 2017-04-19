@@ -1,6 +1,6 @@
 # BikeApp
 ## Purpose of this project
-This project is part of the 2017 [DH2642-Interaction Programming and the Dynamic Web](https://www.kth.se/student/kurser/kurs/DH2642?l=en) at the Royal Institute of Techonology ([KTH](www.kth.se)) in Stockholm, Sweden.
+This project is part of the 2017 [DH2642-Interaction Programming and the Dynamic Web](https://www.kth.se/student/kurser/kurs/DH2642?l=en) at the Royal Institute of Techonology ([KTH](http://www.kth.se)) in Stockholm, Sweden.
 
 ## About the project
 We have created an online reporting system for cyclists in Seattle. This system allows to mark on the map issues that cyclists commonly find on the road:
