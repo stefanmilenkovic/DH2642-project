@@ -13,7 +13,7 @@ Using the open data from the [City of Seattle](https://data.seattle.gov) we coll
 
 More informartion in the [Wiki](https://github.com/stefanmilenkovic/DH2642-project/wiki).
 
-##Team
+## Team
 * Deepika Vinaykiya
 * Joaquin Sanchez-Valiente
 * Stefan Milenkovic
